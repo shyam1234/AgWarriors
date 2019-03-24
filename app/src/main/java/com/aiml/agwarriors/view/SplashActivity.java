@@ -1,12 +1,12 @@
-package com.aiml.agwarriors;
+package com.aiml.agwarriors.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-public class SplashActivity extends BaseActivity implements IActivity{
+import com.aiml.agwarriors.IActivity;
+import com.aiml.agwarriors.R;
+
+public class SplashActivity extends BaseActivity implements IActivity {
 
     private static final long DELAY_IN_MISEC = 4000;
     private Handler mHandler;

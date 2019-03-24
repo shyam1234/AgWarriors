@@ -1,8 +1,9 @@
-package com.aiml.agwarriors;
+package com.aiml.agwarriors.view;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.aiml.agwarriors.IActivity;
+import com.aiml.agwarriors.R;
 
 public class MainActivity extends BaseActivity implements IActivity {
 

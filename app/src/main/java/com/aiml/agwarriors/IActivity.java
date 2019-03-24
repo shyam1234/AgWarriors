@@ -2,7 +2,7 @@ package com.aiml.agwarriors;
 
 import android.os.Bundle;
 
-interface IActivity {
+public interface IActivity {
     void onCreate(Bundle bundle);
     void init();
     void initView();

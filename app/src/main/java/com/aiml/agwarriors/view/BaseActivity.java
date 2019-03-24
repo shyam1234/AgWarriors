@@ -1,4 +1,4 @@
-package com.aiml.agwarriors;
+package com.aiml.agwarriors.view;
 
 import android.content.Context;
 import android.content.Intent;
