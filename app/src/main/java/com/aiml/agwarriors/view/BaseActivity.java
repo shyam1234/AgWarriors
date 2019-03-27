@@ -9,4 +9,8 @@ public class BaseActivity extends AppCompatActivity {
     public void navigateTo(Context pContext, Class pClass){
         startActivity(new Intent(pContext,pClass));
     }
+
+    public void finished() {
+        finish();
+    }
 }
