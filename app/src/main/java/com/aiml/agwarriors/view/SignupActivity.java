@@ -20,7 +20,7 @@ public class SignupActivity extends BaseActivity implements IActivity, View.OnCl
 
     @Override
     public void init() {
-
+        getSupportActionBar().hide();
     }
 
     @Override

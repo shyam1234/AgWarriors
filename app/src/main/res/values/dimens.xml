@@ -4,4 +4,5 @@
     <dimen name="button_size_medium">22sp</dimen>
     <dimen name="button_size_small">18sp</dimen>
     <dimen name="button_size_high">28sp</dimen>
+    <dimen name="header_height">80dp</dimen>
 </resources>

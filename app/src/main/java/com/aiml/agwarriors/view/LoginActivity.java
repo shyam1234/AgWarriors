@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiml.agwarriors.IActivity;
 import com.aiml.agwarriors.R;
@@ -27,7 +28,7 @@ public class LoginActivity extends BaseActivity implements IActivity, View.OnCli
 
     @Override
     public void init() {
-
+        getSupportActionBar().hide();
     }
 
     @Override
@@ -62,6 +63,9 @@ public class LoginActivity extends BaseActivity implements IActivity, View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_login_log_in:
+                Toast.makeText(LoginActivity.this, "You have successfully login", Toast.LENGTH_LONG).show();
+                navigateTo(LoginActivity.this, MainActivity.class);
+                finished();
                 break;
             case R.id.textview_login_forgot:
                 break;

@@ -5,7 +5,18 @@
     android:orientation="vertical"
     android:padding="@dimen/commom_padding">
 
+    <TextView
+        android:id="@+id/textview_signup_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Sign Up"
+        android:textSize="@dimen/button_size_high"
+        android:textStyle="bold" />
+
     <EditText
+        android:layout_below="@+id/textview_signup_title"
         android:id="@+id/edititext_signup_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
