@@ -6,8 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.aiml.agwarriors.IActivity;
 import com.aiml.agwarriors.R;
+import com.aiml.agwarriors.interfaces.IActivity;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;

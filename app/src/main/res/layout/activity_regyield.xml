@@ -18,7 +18,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <TextView
+            <com.aiml.agwarriors.utils.FontTextView
                 android:id="@+id/textview_regyield_crop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <TextView
+            <com.aiml.agwarriors.utils.FontTextView
                 android:id="@+id/textview_regyield_yieldin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <TextView
+            <com.aiml.agwarriors.utils.FontTextView
                 android:id="@+id/textview_regyield_cost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <TextView
+            <com.aiml.agwarriors.utils.FontTextView
                 android:id="@+id/textview_regyield_duration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <TextView
+            <com.aiml.agwarriors.utils.FontTextView
                 android:id="@+id/textview_regyield_place_to_sell"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -179,7 +179,7 @@
                  android:layout_weight="0.5"
                  android:padding="4dp" />-->
 
-            <TextView
+            <com.aiml.agwarriors.utils.FontTextView
                 android:id="@+id/textview_regyield_place_to_sell_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

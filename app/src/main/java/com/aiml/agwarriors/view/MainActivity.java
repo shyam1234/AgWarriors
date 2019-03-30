@@ -1,13 +1,16 @@
 package com.aiml.agwarriors.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.aiml.agwarriors.IActivity;
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.adapters.MainScreenAdapter;
+import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.MainScreenModel;
+import com.aiml.agwarriors.utils.CustomDialogbox;
 import com.aiml.agwarriors.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
@@ -112,5 +115,38 @@ public class MainActivity extends BaseActivity implements IActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        popupCloseAppAcknowledge();
+    }
+
+    private void popupCloseAppAcknowledge() {
+        final CustomDialogbox dialogbox = new CustomDialogbox(this, CustomDialogbox.TYPE_YES_NO);
+        dialogbox.setTitle("Do you want to exit?");
+        dialogbox.show();
+        dialogbox.getBtnYes().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        dialogbox.getBtnNo().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogbox.dismiss();
+            }
+        });
+        dialogbox.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface mDialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    mDialog.dismiss();
+                }
+                return true;
+            }
+        });
     }
 }

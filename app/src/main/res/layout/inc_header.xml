@@ -13,7 +13,7 @@
         android:scaleType="centerInside"
         android:src="@drawable/back" />
 
-    <TextView
+    <com.aiml.agwarriors.utils.FontTextView
         android:id="@+id/textview_header_title"
         android:layout_width="250dp"
         android:layout_height="match_parent"

@@ -3,8 +3,8 @@ package com.aiml.agwarriors.view;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.aiml.agwarriors.IActivity;
 import com.aiml.agwarriors.R;
+import com.aiml.agwarriors.interfaces.IActivity;
 
 public class SplashActivity extends BaseActivity implements IActivity {
 

@@ -1,4 +1,4 @@
-package com.aiml.agwarriors;
+package com.aiml.agwarriors.application;
 
 import android.app.Application;
 

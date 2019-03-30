@@ -5,7 +5,7 @@
     android:layout_margin="20dp"
     android:orientation="vertical">
 
-    <TextView
+    <com.aiml.agwarriors.utils.FontTextView
         android:background="@color/colorBlue"
         android:id="@+id/textview_row_main_item"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.aiml.agwarriors;
+package com.aiml.agwarriors.interfaces;
 
 import android.os.Bundle;
 

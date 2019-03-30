@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aiml.agwarriors.IActivity;
 import com.aiml.agwarriors.R;
+import com.aiml.agwarriors.interfaces.IActivity;
 
 public class LoginActivity extends BaseActivity implements IActivity, View.OnClickListener {
 
