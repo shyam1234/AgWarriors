@@ -27,7 +27,7 @@ public class SplashActivity extends BaseActivity implements IActivity {
         mRunnable = new Runnable() {
             @Override
             public void run() {
-                navigateTo(SplashActivity.this, LoginActivity.class);
+                navigateTo(SplashActivity.this, LoginActivity.class, true);
             }
         };
         mHandler.postDelayed(mRunnable, DELAY_IN_MISEC);
@@ -48,7 +48,6 @@ public class SplashActivity extends BaseActivity implements IActivity {
     public void onStop() {
         super.onStop();
         mHandler.removeCallbacks(mRunnable);
-        finished();
     }
 
     @Override

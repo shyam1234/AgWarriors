@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:padding="@dimen/commom_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/commom_padding"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textview_regyield_crop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:padding="4dp"
+                android:text="Yield"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
+
+            <EditText
+                android:id="@+id/edittext_regyield_crop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/border_rect"
+                android:padding="4dp"
+                android:singleLine="true"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/commom_padding"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textview_regyield_yieldin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:padding="4dp"
+                android:text="Yieldin"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
+
+            <EditText
+                android:id="@+id/edittext_regyield_yieldin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.3"
+                android:background="@drawable/border_rect"
+                android:padding="4dp"
+                android:singleLine="true"
+                android:textColor="@color/colorBlack" />
+
+            <Spinner
+                android:id="@+id/spinner_regyield_unit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.2"
+                android:background="@drawable/border_rect"
+                android:entries="@array/unit"
+                android:padding="5dp"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/commom_padding"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textview_regyield_cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:padding="4dp"
+                android:text="Cost/Unit"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
+
+            <EditText
+                android:id="@+id/edittext_regyield_cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.3"
+                android:background="@drawable/border_rect"
+                android:padding="4dp"
+                android:singleLine="true"
+                android:textColor="@color/colorBlack" />
+
+            <Spinner
+                android:id="@+id/spinner_regyield_cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.2"
+                android:background="@drawable/border_rect"
+                android:entries="@array/unit"
+                android:padding="5dp"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/commom_padding"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textview_regyield_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:padding="4dp"
+                android:text="Duration (In days)"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
+
+            <EditText
+                android:id="@+id/edittext_regyield_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/border_rect"
+                android:inputType="number"
+                android:padding="4dp"
+                android:singleLine="true"
+                android:textColor="@color/colorBlack" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/commom_padding"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textview_regyield_place_to_sell"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:padding="4dp"
+                android:text="Place to sell"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
+
+            <!-- <fragment
+                 android:id="@+id/autocomplete_fragment_regyield_place_to_sell_value"
+                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="0.5"
+                 android:padding="4dp" />-->
+
+            <TextView
+                android:id="@+id/textview_regyield_place_to_sell_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/border_rect"
+                android:gravity="center"
+                android:hint="Click to search place"
+                android:padding="4dp"
+                android:singleLine="true"
+                android:textColor="@color/colorBlack" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/commom_padding"
+
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/button_regyield_freeze"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:padding="4dp"
+                android:text="Freeze"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
+
+            <Button
+                android:id="@+id/button_regyield_Analysis"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:padding="4dp"
+                android:text="Analysis"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

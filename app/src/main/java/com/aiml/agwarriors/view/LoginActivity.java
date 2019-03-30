@@ -33,11 +33,11 @@ public class LoginActivity extends BaseActivity implements IActivity, View.OnCli
 
     @Override
     public void initView() {
-        mEdititext_login_username = (EditText) findViewById(R.id.edititext_login_username);
-        mEdititext_login_password = (EditText) findViewById(R.id.edititext_login_password);
-        mButton_login_log_in = (Button) findViewById(R.id.button_login_log_in);
-        mTextview_login_forgot = (TextView) findViewById(R.id.textview_login_forgot);
-        mTextview_login_signup = (TextView) findViewById(R.id.textview_login_signup);
+        mEdititext_login_username = findViewById(R.id.edititext_login_username);
+        mEdititext_login_password = findViewById(R.id.edititext_login_password);
+        mButton_login_log_in = findViewById(R.id.button_login_log_in);
+        mTextview_login_forgot = findViewById(R.id.textview_login_forgot);
+        mTextview_login_signup = findViewById(R.id.textview_login_signup);
 
         mButton_login_log_in.setOnClickListener(this);
         mTextview_login_forgot.setOnClickListener(this);
@@ -64,8 +64,7 @@ public class LoginActivity extends BaseActivity implements IActivity, View.OnCli
         switch (view.getId()) {
             case R.id.button_login_log_in:
                 Toast.makeText(LoginActivity.this, "You have successfully login", Toast.LENGTH_LONG).show();
-                navigateTo(LoginActivity.this, MainActivity.class);
-                finished();
+                navigateTo(LoginActivity.this, MainActivity.class, true);
                 break;
             case R.id.textview_login_forgot:
                 break;

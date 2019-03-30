@@ -17,6 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends BaseActivity implements IActivity {
 
+    private final int YIELD = 0;
+    private final int HISTORY = 1;
+    private final int GENERAL_INFO = 2;
+    private final int ANALYTICS = 3;
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -26,7 +31,6 @@ public class MainActivity extends BaseActivity implements IActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("Dashboard");
         init();
         initView();
     }
@@ -47,11 +51,18 @@ public class MainActivity extends BaseActivity implements IActivity {
 
     @Override
     public void initView() {
+        initHeader();
         initRecyclerView();
     }
 
+    private void initHeader() {
+        getSupportActionBar().setTitle("Dashboard");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(android.R.drawable.star_on);
+    }
+
     private void initRecyclerView() {
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_main_holder);
+        recyclerView = findViewById(R.id.recyclerview_main_holder);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
@@ -64,9 +75,20 @@ public class MainActivity extends BaseActivity implements IActivity {
                 recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                //Values are passing to activity & to fragment as well
-                Toast.makeText(MainActivity.this, "Single Click on position        :" + position,
-                        Toast.LENGTH_SHORT).show();
+                switch (position) {
+                    case YIELD:
+                        navigateTo(MainActivity.this, RegYieldActivity.class, false);
+                        break;
+                    case GENERAL_INFO:
+                        Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                        break;
+                    case HISTORY:
+                        Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                        break;
+                    case ANALYTICS:
+                        Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
 
             @Override

@@ -16,6 +16,8 @@ public class SignupActivity extends BaseActivity implements IActivity, View.OnCl
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_signup);
+        init();
+        initView();
     }
 
     @Override
@@ -25,7 +27,7 @@ public class SignupActivity extends BaseActivity implements IActivity, View.OnCl
 
     @Override
     public void initView() {
-        mButton_signup_sign_up = (Button) findViewById(R.id.button_signup_sign_up);
+        mButton_signup_sign_up = findViewById(R.id.button_signup_sign_up);
         mButton_signup_sign_up.setOnClickListener(this);
     }
 

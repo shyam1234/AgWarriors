@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aiml.agwarriors">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!-- <uses-library android:name="com.google.android.maps" />
+ -->
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -35,6 +44,15 @@
             android:name=".view.SignupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustPan"></activity>
+
+        <activity
+            android:name=".view.RegYieldActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustPan"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDgNfUmVAi0PTVWEpqIGrMBoP-RGFWNjcA" />
     </application>
 
 </manifest>

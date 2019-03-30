@@ -13,6 +13,6 @@
         android:gravity="center"
         android:text="Test"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/button_size_high"
+        android:textSize="@dimen/button_size_medium"
         android:textStyle="bold" />
 </LinearLayout>
