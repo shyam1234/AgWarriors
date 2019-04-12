@@ -1,6 +1,7 @@
 package com.aiml.agwarriors.view;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class LoginActivity extends BaseActivity implements IActivity, View.OnCli
         mButton_login_log_in.setOnClickListener(this);
         mTextview_login_forgot.setOnClickListener(this);
         mTextview_login_signup.setOnClickListener(this);
+        mTextview_login_signup.setText(Html.fromHtml("<p>Don't have an account? <b><u>Sign up</u></b></p>"));
     }
 
     @Override

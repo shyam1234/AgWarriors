@@ -6,4 +6,10 @@
         <item>Kg</item>
         <item>Grams</item>
     </string-array>
+
+    <string-array name="crop_type">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
 </resources>

@@ -16,13 +16,13 @@
         android:textStyle="bold" />
 
     <EditText
-        android:layout_below="@+id/textview_signup_title"
         android:id="@+id/edititext_signup_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textview_signup_title"
         android:layout_marginTop="50dp"
         android:layout_weight="0.5"
-        android:hint="User Name"
+        android:hint="User Name *"
         android:singleLine="true"
         android:textColor="@color/colorBlack"
         android:textColorHint="@color/colorBlack"
@@ -35,7 +35,7 @@
         android:layout_below="@+id/edititext_signup_username"
         android:layout_marginTop="10dp"
         android:layout_weight="0.5"
-        android:hint="Password"
+        android:hint="Password *"
         android:inputType="numberPassword"
         android:singleLine="true"
         android:textColor="@color/colorBlack"
@@ -49,7 +49,7 @@
         android:layout_below="@+id/edititext_signup_password"
         android:layout_marginTop="10dp"
         android:layout_weight="0.5"
-        android:hint="Confirm Password"
+        android:hint="Confirm Password *"
         android:inputType="numberPassword"
         android:singleLine="true"
         android:textColor="@color/colorBlack"
@@ -57,11 +57,26 @@
         android:textSize="@dimen/button_size_medium" />
 
 
+    <EditText
+        android:id="@+id/edititext_signup_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edititext_signup_confirmation_password"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.5"
+        android:digits="0123456789+"
+        android:hint="Mobile number"
+        android:inputType="phone"
+        android:singleLine="true"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorBlack"
+        android:textSize="@dimen/button_size_medium" />
+
     <RadioGroup
         android:id="@+id/radiogroup_signup_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edititext_signup_confirmation_password"
+        android:layout_below="@+id/edititext_signup_phone_number"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:weightSum="2">
@@ -81,6 +96,14 @@
             android:text="Buyer" />
     </RadioGroup>
 
+    <fragment
+        android:id="@+id/fragment_signup_locate_me"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/radiogroup_signup_holder"
+        android:layout_marginTop="10dp" />
+
     <!-- <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
          xmlns:map="http://schemas.android.com/apk/res-auto"
          android:id="@+id/mapView"
@@ -94,11 +117,12 @@
          map:uiZoomControls="true"
          map:zOrderOnTop="true" />-->
 
+
     <Button
         android:id="@+id/button_signup_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/radiogroup_signup_holder"
+        android:layout_below="@+id/fragment_signup_locate_me"
         android:layout_marginTop="40dp"
         android:background="@color/colorRed"
         android:text="Sign up"

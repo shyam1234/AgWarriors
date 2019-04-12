@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <com.aiml.agwarriors.utils.FontTextView
@@ -10,12 +11,13 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Login"
+        android:textColor="@color/colorBlack"
         android:textSize="@dimen/button_size_high"
         android:textStyle="bold" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_weight="0.5"
-                android:hint="User Name"
+                android:hint="User Name *"
                 android:singleLine="true"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorBlack"
@@ -42,7 +44,7 @@
                 android:layout_below="@+id/edititext_login_username"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0.5"
-                android:hint="Password"
+                android:hint="Password *"
                 android:inputType="numberPassword"
                 android:singleLine="true"
                 android:textColor="@color/colorBlack"
@@ -114,14 +116,14 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="20dp"></include>
 
-            <com.aiml.agwarriors.utils.FontTextView
+
+            <TextView
                 android:id="@+id/textview_login_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
+                android:layout_below="@+id/include_login_social_media"
                 android:gravity="center"
-                android:text="Don't have an account? Sign up"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/button_size_small"

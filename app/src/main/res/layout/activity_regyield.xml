@@ -7,9 +7,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="0dp"
         android:orientation="vertical"
         android:padding="@dimen/commom_padding">
+
+        <Button
+            android:id="@+id/button_regyield_smartanalysis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="4dp"
+            android:text="Smart Analysis"
+            android:textColor="@color/colorBlack" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,13 +59,43 @@
             android:weightSum="1">
 
             <com.aiml.agwarriors.utils.FontTextView
+                android:id="@+id/textview_regyield_crop_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:padding="4dp"
+                android:text="Yield Type"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
+
+
+            <Spinner
+                android:id="@+id/spinner_regyield_crop_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/border_rect"
+                android:entries="@array/crop_type"
+                android:padding="5dp"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/commom_padding"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <com.aiml.agwarriors.utils.FontTextView
                 android:id="@+id/textview_regyield_yieldin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
                 android:padding="4dp"
-                android:text="Yieldin"
+                android:text="Quantity"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/button_size_medium" />
 
@@ -89,46 +129,6 @@
             android:weightSum="1">
 
             <com.aiml.agwarriors.utils.FontTextView
-                android:id="@+id/textview_regyield_cost"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:padding="4dp"
-                android:text="Cost/Unit"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/button_size_medium" />
-
-            <EditText
-                android:id="@+id/edittext_regyield_cost"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.3"
-                android:background="@drawable/border_rect"
-                android:padding="4dp"
-                android:singleLine="true"
-                android:textColor="@color/colorBlack" />
-
-            <Spinner
-                android:id="@+id/spinner_regyield_cost"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="0.2"
-                android:background="@drawable/border_rect"
-                android:entries="@array/unit"
-                android:padding="5dp"></Spinner>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/commom_padding"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <com.aiml.agwarriors.utils.FontTextView
                 android:id="@+id/textview_regyield_duration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -144,14 +144,39 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:background="@drawable/border_rect"
                 android:inputType="number"
                 android:padding="4dp"
                 android:singleLine="true"
                 android:textColor="@color/colorBlack" />
 
+            <ImageView
+                android:id="@+id/imageview_regyield_cal"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.1"
+                android:src="@android:drawable/ic_menu_my_calendar"></ImageView>
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button_regyield_Analysis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:text="Locate Buyer"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+
+        <fragment
+            android:id="@+id/fragment_regyield_locate_buyer"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/radiogroup_signup_holder"
+            android:layout_marginTop="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -199,33 +224,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/commom_padding"
-
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <Button
-                android:id="@+id/button_regyield_freeze"
+            <com.aiml.agwarriors.utils.FontTextView
+                android:id="@+id/textview_regyield_cost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
                 android:padding="4dp"
-                android:text="Freeze"
+                android:text="Cost/Unit"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/button_size_medium" />
 
-            <Button
-                android:id="@+id/button_regyield_Analysis"
+            <EditText
+                android:id="@+id/edittext_regyield_cost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
+                android:background="@drawable/border_rect"
+                android:inputType="number"
                 android:padding="4dp"
-                android:text="Analysis"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/button_size_medium" />
+                android:singleLine="true"
+                android:textColor="@color/colorBlack" />
 
+            <Spinner
+                android:id="@+id/spinner_regyield_cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.2"
+                android:background="@drawable/border_rect"
+                android:entries="@array/unit"
+                android:padding="5dp"></Spinner>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button_regyield_freeze"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:text="Broadcast"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+
 
     </LinearLayout>
 </ScrollView>
