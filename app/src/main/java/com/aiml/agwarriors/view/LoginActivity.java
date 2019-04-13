@@ -5,13 +5,14 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.interfaces.IActivity;
 
-public class LoginActivity extends BaseActivity implements IActivity, View.OnClickListener {
+public class LoginActivity extends BaseActivity implements IActivity {
 
     private EditText mEdititext_login_username;
     private EditText mEdititext_login_password;
@@ -29,11 +30,12 @@ public class LoginActivity extends BaseActivity implements IActivity, View.OnCli
 
     @Override
     public void init() {
-        getSupportActionBar().hide();
+
     }
 
     @Override
     public void initView() {
+        initHeader();
         mEdititext_login_username = findViewById(R.id.edititext_login_username);
         mEdititext_login_password = findViewById(R.id.edititext_login_password);
         mButton_login_log_in = findViewById(R.id.button_login_log_in);
@@ -44,6 +46,14 @@ public class LoginActivity extends BaseActivity implements IActivity, View.OnCli
         mTextview_login_forgot.setOnClickListener(this);
         mTextview_login_signup.setOnClickListener(this);
         mTextview_login_signup.setText(Html.fromHtml("<p>Don't have an account? <b><u>Sign up</u></b></p>"));
+    }
+
+    private void initHeader() {
+        ImageView back = (ImageView) findViewById(R.id.imageview_back);
+        TextView title = (TextView) findViewById(R.id.textview_title);
+        ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
+        title.setText("Login");
+        back.setOnClickListener(this);
     }
 
     @Override
@@ -63,6 +73,7 @@ public class LoginActivity extends BaseActivity implements IActivity, View.OnCli
 
     @Override
     public void onClick(View view) {
+        super.onClick(view);
         switch (view.getId()) {
             case R.id.button_login_log_in:
                 Toast.makeText(LoginActivity.this, "You have successfully login", Toast.LENGTH_LONG).show();

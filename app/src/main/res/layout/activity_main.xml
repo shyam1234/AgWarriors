@@ -5,6 +5,13 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/inc_header"
+        layout="@layout/inc_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_size"
+        android:visibility="visible"></include>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_main_holder"
         android:layout_width="match_parent"

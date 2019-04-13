@@ -5,12 +5,20 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/inc_header"
+        layout="@layout/inc_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_size"
+        android:visibility="visible"></include>
+
     <com.aiml.agwarriors.utils.FontTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Login"
+        android:visibility="gone"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/button_size_high"
         android:textStyle="bold" />
@@ -104,17 +112,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textview_login_forgot"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"></include>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"></include>
 
             <include
                 android:id="@+id/include_login_social_media"
                 layout="@layout/activity_social_media"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="180dp"
                 android:layout_below="@+id/include_login"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="20dp"></include>
+                android:layout_marginBottom="10dp"></include>
 
 
             <TextView

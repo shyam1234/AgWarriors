@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.interfaces.IActivity;
@@ -16,7 +18,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class SignupActivity extends BaseActivity implements IActivity, View.OnClickListener {
+public class SignupActivity extends BaseActivity implements IActivity {
 
 
     private Button mButton_signup_sign_up;
@@ -32,16 +34,26 @@ public class SignupActivity extends BaseActivity implements IActivity, View.OnCl
 
     @Override
     public void init() {
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         setUpMapIfNeeded();
     }
 
     @Override
     public void initView() {
+        initHeader();
         mButton_signup_sign_up = findViewById(R.id.button_signup_sign_up);
         mButton_signup_sign_up.setOnClickListener(this);
     }
 
+    private void initHeader() {
+        ImageView back = (ImageView) findViewById(R.id.imageview_back);
+        TextView title = (TextView) findViewById(R.id.textview_title);
+        ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
+        title.setText("SignUp");
+        back.setVisibility(View.VISIBLE);
+        back.setOnClickListener(this);
+
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -59,6 +71,7 @@ public class SignupActivity extends BaseActivity implements IActivity, View.OnCl
 
     @Override
     public void onClick(View view) {
+        super.onClick(view);
         switch (view.getId()) {
             case R.id.button_signup_sign_up:
                 break;

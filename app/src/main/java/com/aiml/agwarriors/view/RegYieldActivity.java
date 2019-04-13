@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class RegYieldActivity extends BaseActivity implements IActivity, View.OnClickListener {
+public class RegYieldActivity extends BaseActivity implements IActivity {
     private final int AUTOCOMPLETE_REQUEST_CODE = 1;
     private final int MAX_DURATION = 31;
     private TextView mTextview_regyield_place_to_sell_value;
@@ -47,7 +47,6 @@ public class RegYieldActivity extends BaseActivity implements IActivity, View.On
 
     @Override
     public void init() {
-        initHeader();
         initCalendar();
         mCalendear = Calendar.getInstance();
         if (!Places.isInitialized()) {
@@ -79,13 +78,17 @@ public class RegYieldActivity extends BaseActivity implements IActivity, View.On
     }
 
     private void initHeader() {
-        getSupportActionBar().setTitle("Register Yield");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(android.R.drawable.star_on);
+        ImageView back = (ImageView) findViewById(R.id.imageview_back);
+        TextView title = (TextView) findViewById(R.id.textview_title);
+        ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
+        back.setOnClickListener(this);
+        back.setVisibility(View.VISIBLE);
+        title.setText("Register Yield");
     }
 
     @Override
     public void initView() {
+        initHeader();
         mImageview_regyield_cal = (ImageView) findViewById(R.id.imageview_regyield_cal);
         mImageview_regyield_cal.setOnClickListener(this);
         mTextview_regyield_place_to_sell_value = findViewById(R.id.textview_regyield_place_to_sell_value);
@@ -131,6 +134,7 @@ public class RegYieldActivity extends BaseActivity implements IActivity, View.On
 
     @Override
     public void onClick(View view) {
+        super.onClick(view);
         switch (view.getId()) {
             case R.id.textview_regyield_place_to_sell_value:
                 Intent intent = new Autocomplete.IntentBuilder(

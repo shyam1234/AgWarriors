@@ -6,7 +6,7 @@ public class MyApplication extends Application {
 
     private static MyApplication instance;
 
-    private MyApplication() {
+    public MyApplication() {
     }
 
     public static MyApplication getInstance() {

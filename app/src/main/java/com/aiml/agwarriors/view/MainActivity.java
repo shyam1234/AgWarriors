@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiml.agwarriors.R;
@@ -52,17 +54,21 @@ public class MainActivity extends BaseActivity implements IActivity {
 
     }
 
+    private void initHeader() {
+        ImageView back = (ImageView) findViewById(R.id.imageview_back);
+        TextView title = (TextView) findViewById(R.id.textview_title);
+        ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
+        title.setText(R.string.app_name);
+        back.setOnClickListener(this);
+
+    }
+
     @Override
     public void initView() {
         initHeader();
         initRecyclerView();
     }
 
-    private void initHeader() {
-        getSupportActionBar().setTitle("Dashboard");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(android.R.drawable.star_on);
-    }
 
     private void initRecyclerView() {
         recyclerView = findViewById(R.id.recyclerview_main_holder);
@@ -149,4 +155,5 @@ public class MainActivity extends BaseActivity implements IActivity {
             }
         });
     }
+
 }
