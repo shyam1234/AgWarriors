@@ -45,7 +45,17 @@
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".view.RegYieldActivity"
+            android:name=".view.RegisterYieldActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".view.YieldListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".view.ReadBroadcastYieldActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 

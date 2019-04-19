@@ -8,8 +8,13 @@
     </string-array>
 
     <string-array name="crop_type">
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
+        <item>Type</item>
+        <item>Alphonso</item>
+        <item>Banganpalli</item>
+        <item>Chausa</item>
+        <item>Dashehri</item>
+        <item>Langra</item>
+        <item>Totapuri</item>
+        <item>Kesar</item>
     </string-array>
 </resources>

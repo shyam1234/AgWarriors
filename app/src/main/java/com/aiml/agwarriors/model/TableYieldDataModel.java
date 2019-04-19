@@ -1,7 +1,7 @@
 package com.aiml.agwarriors.model;
 
 public class TableYieldDataModel {
-    private String ID = null;
+    private String LotId = null;
     private String UID = null;
     private String YIELD = null;
     private String YIELD_TYPE = null;
@@ -10,12 +10,12 @@ public class TableYieldDataModel {
     private String PLACE_TO_SELL = null;
     private String COST = null;
 
-    public String getID() {
-        return ID;
+    public String getLotId() {
+        return LotId;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setLotId(String lotId) {
+        this.LotId = lotId;
     }
 
     public String getUID() {

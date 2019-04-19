@@ -7,13 +7,19 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiml.agwarriors.R;
+import com.aiml.agwarriors.constant.Constant;
 import com.aiml.agwarriors.interfaces.IActivity;
+import com.aiml.agwarriors.model.YieldListModel;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -27,7 +33,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class RegYieldActivity extends BaseActivity implements IActivity {
+public class RegisterYieldActivity extends BaseActivity implements IActivity, AdapterView.OnItemSelectedListener {
     private final int AUTOCOMPLETE_REQUEST_CODE = 1;
     private final int MAX_DURATION = 31;
     private TextView mTextview_regyield_place_to_sell_value;
@@ -36,6 +42,16 @@ public class RegYieldActivity extends BaseActivity implements IActivity {
     private ImageView mImageview_regyield_cal;
     private Calendar mCalendear;
     private DatePickerDialog.OnDateSetListener mDate;
+    private Button mBtn_broadcast;
+    private YieldListModel mModel;
+    private EditText mEdittext_regyield_crop;
+    private Spinner mSpinner_regyield_crop_type;
+    private EditText mQty;
+    private Spinner mSpinner_regyield_unit;
+    private TextView mTextview_regyield_lot_no_value;
+    private Button mButton_regyield_Analysis;
+    private EditText mEdittext_regyield_cost;
+    private Spinner mSpinner_regyield_cost;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -47,6 +63,7 @@ public class RegYieldActivity extends BaseActivity implements IActivity {
 
     @Override
     public void init() {
+        mModel = new YieldListModel();
         initCalendar();
         mCalendear = Calendar.getInstance();
         if (!Places.isInitialized()) {
@@ -89,12 +106,25 @@ public class RegYieldActivity extends BaseActivity implements IActivity {
     @Override
     public void initView() {
         initHeader();
+        mEdittext_regyield_crop = (EditText) findViewById(R.id.edittext_regyield_crop);
+        Button button_regyield_smartanalysis = (Button) findViewById(R.id.button_regyield_smartanalysis);
+        button_regyield_smartanalysis.setOnClickListener(this);
+        mSpinner_regyield_crop_type = (Spinner) findViewById(R.id.spinner_regyield_crop_type);
+        mQty = (EditText) findViewById(R.id.edittext_regyield_yieldin);
+        mSpinner_regyield_unit = (Spinner) findViewById(R.id.spinner_regyield_unit);
+        mEdittext_regyield_duration = (EditText) findViewById(R.id.edittext_regyield_duration);
         mImageview_regyield_cal = (ImageView) findViewById(R.id.imageview_regyield_cal);
         mImageview_regyield_cal.setOnClickListener(this);
+        mTextview_regyield_lot_no_value = (TextView) findViewById(R.id.textview_regyield_lot_no_value);
+        mButton_regyield_Analysis = (Button) findViewById(R.id.button_regyield_Analysis);
+        mButton_regyield_Analysis.setOnClickListener(this);
         mTextview_regyield_place_to_sell_value = findViewById(R.id.textview_regyield_place_to_sell_value);
         mTextview_regyield_place_to_sell_value.setOnClickListener(this);
+        mEdittext_regyield_cost = (EditText) findViewById(R.id.edittext_regyield_cost);
+        mSpinner_regyield_cost = (Spinner) findViewById(R.id.spinner_regyield_cost);
+        mBtn_broadcast = (Button) findViewById(R.id.button_regyield_freeze);
+        mBtn_broadcast.setOnClickListener(this);
 
-        mEdittext_regyield_duration = (EditText) findViewById(R.id.edittext_regyield_duration);
         mEdittext_regyield_duration.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -109,11 +139,15 @@ public class RegYieldActivity extends BaseActivity implements IActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 /*if (Integer.parseInt((editable.toString().isEmpty() ? "0" : editable.toString())) > MAX_DURATION) {
-                    Toast.makeText(RegYieldActivity.this, "Duration will not be more than 31 days", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterYieldActivity.this, "Duration will not be more than 31 days", Toast.LENGTH_LONG).show();
                     editable.clear();
                 }*/
             }
         });
+
+        mSpinner_regyield_crop_type.setOnItemSelectedListener(this);
+        mSpinner_regyield_unit.setOnItemSelectedListener(this);
+        mSpinner_regyield_cost.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -146,11 +180,37 @@ public class RegYieldActivity extends BaseActivity implements IActivity {
             case R.id.imageview_regyield_cal:
                 showCalender();
                 break;
+            case R.id.button_regyield_freeze:
+                Toast.makeText(RegisterYieldActivity.this, "Successfully sent broadcast to buyers ",Toast.LENGTH_LONG).show();
+                addDataIntoList();
+                finish();
+                break;
+            case R.id.button_regyield_smartanalysis:
+                Toast.makeText(RegisterYieldActivity.this, "Coming soon",Toast.LENGTH_LONG).show();
+                break;
+            case R.id.button_regyield_Analysis:
+                Toast.makeText(RegisterYieldActivity.this, "Coming soon",Toast.LENGTH_LONG).show();
+                break;
         }
     }
 
+    private void addDataIntoList() {
+        mModel.setYield(mEdittext_regyield_crop.getText().toString());
+        mModel.setYieldType(mSpinner_regyield_crop_type.getSelectedItem().toString());
+        mModel.setDate(mEdittext_regyield_duration.getText().toString());
+        mModel.setQTY(mQty.getText().toString());
+        mModel.setQTYType(mSpinner_regyield_unit.getSelectedItem().toString());
+        mModel.setCostPerUnit(mEdittext_regyield_cost.getText().toString());
+        mModel.setCostUnit(mSpinner_regyield_cost.getSelectedItem().toString());
+        mModel.setPlaceToSell(mTextview_regyield_place_to_sell_value.getText().toString());
+        mModel.setStatus("Sent Broadcast");
+        mTextview_regyield_lot_no_value.setText("LOT_"+mModel.getDate()+"_"+mModel.getYield()+"_"+mModel.getYieldType());
+        mModel.setLotnumber(mTextview_regyield_lot_no_value.getText().toString().replace("/",""));
+        Constant.mList.add(mModel);
+    }
+
     private void showCalender() {
-        new DatePickerDialog(RegYieldActivity.this, mDate, mCalendear
+        new DatePickerDialog(RegisterYieldActivity.this, mDate, mCalendear
                 .get(Calendar.YEAR), mCalendear.get(Calendar.MONTH),
                 mCalendear.get(Calendar.DAY_OF_MONTH)).show();
     }
@@ -173,4 +233,26 @@ public class RegYieldActivity extends BaseActivity implements IActivity {
         }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+         switch (adapterView.getId()){
+             case R.id.spinner_regyield_crop_type:
+                 break;
+             case R.id.spinner_regyield_unit:
+                 if(mSpinner_regyield_cost.getSelectedItemPosition() != i) {
+                     mSpinner_regyield_cost.setSelection(i);
+                 }
+                 break;
+             case R.id.spinner_regyield_cost:
+                 if(mSpinner_regyield_unit.getSelectedItemPosition() != i) {
+                     mSpinner_regyield_unit.setSelection(i);
+                 }
+                 break;
+         }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.adapters.MainScreenAdapter;
+import com.aiml.agwarriors.constant.Constant;
 import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.MainScreenModel;
 import com.aiml.agwarriors.utils.CustomDialogbox;
@@ -86,7 +87,11 @@ public class MainActivity extends BaseActivity implements IActivity {
             public void onClick(View view, final int position) {
                 switch (position) {
                     case YIELD:
-                        navigateTo(MainActivity.this, RegYieldActivity.class, false);
+                        if (Constant.mList.size()>0) {
+                            navigateTo(MainActivity.this, YieldListActivity.class, false);
+                        }else {
+                            navigateTo(MainActivity.this, RegisterYieldActivity.class, false);
+                        }
                         break;
                     case GENERAL_INFO:
                         Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();

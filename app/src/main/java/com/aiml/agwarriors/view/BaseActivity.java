@@ -2,6 +2,7 @@ package com.aiml.agwarriors.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.aiml.agwarriors.R;
@@ -15,6 +16,15 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     public void navigateTo(Context pContext, Class pClass, boolean isPreviousActivityExit) {
         startActivity(new Intent(pContext, pClass));
+        if (isPreviousActivityExit) {
+            finish();
+        }
+    }
+
+    public void navigateTo(Context pContext, Class pClass, Bundle pBundle, boolean isPreviousActivityExit) {
+        Intent intent = new Intent(pContext, pClass);
+        intent.putExtras(pBundle);
+        startActivity(intent);
         if (isPreviousActivityExit) {
             finish();
         }

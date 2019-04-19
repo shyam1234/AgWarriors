@@ -62,7 +62,7 @@ public class TableYield {
             if (mDB != null) {
                 //deleteDataIfExist(holder.getUniversityId(), holder.getConversionId());
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(ID, holder.getID());
+                contentValues.put(ID, holder.getLotId());
                 contentValues.put(UID, holder.getUID());
                 contentValues.put(YIELD, holder.getYIELD());
                 contentValues.put(YIELD_TYPE, holder.getYIELD_TYPE());
@@ -101,7 +101,7 @@ public class TableYield {
                     do {
                         // get the data into array, or class variable
                         TableYieldDataModel model = new TableYieldDataModel();
-                        model.setID(cursor.getString(cursor.getColumnIndex(ID)));
+                        model.setLotId(cursor.getString(cursor.getColumnIndex(ID)));
                         model.setUID(cursor.getString(cursor.getColumnIndex(UID)));
                         model.setCOST((cursor.getString(cursor.getColumnIndex(COST))));
                         model.setDURATION((cursor.getString(cursor.getColumnIndex(DURATION))));
@@ -133,7 +133,7 @@ public class TableYield {
                 if (cursor.moveToFirst()) {
                     do {
                         // get the data into array, or class variable
-                        model.setID(cursor.getString(cursor.getColumnIndex(ID)));
+                        model.setLotId(cursor.getString(cursor.getColumnIndex(ID)));
                         model.setUID(cursor.getString(cursor.getColumnIndex(UID)));
                         model.setCOST((cursor.getString(cursor.getColumnIndex(COST))));
                         model.setDURATION((cursor.getString(cursor.getColumnIndex(DURATION))));

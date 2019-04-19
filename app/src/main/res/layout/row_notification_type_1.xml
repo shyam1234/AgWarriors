@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lin_row_notification_type_1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/commom_padding"
+    android:background="@drawable/border_rect"
+    android:orientation="vertical"
+    android:padding="@dimen/commom_padding">
+
+    <!-- <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+         android:id="@+id/card_view_row_list_yield"
+         android:layout_width="match_parent"
+         android:layout_height="200dp"
+         android:layout_gravity="center"
+         android:background="@color/colorWhite"
+         card_view:cardCornerRadius="4dp">
+     </android.support.v7.widget.CardView>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_regyield_lot_no_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Lot No."
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+
+        <TextView
+            android:id="@+id/textview_regyield_lot_no_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="LOT_DATE_NO_ID"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_regyield_crop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Yield"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_regyield_crop_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Name"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_regyield_crop_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Yield Type"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_regyield_crop_type_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Type"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_regyield_duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Date"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_regyield_duration_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Date"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_regyield_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Cost"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+
+        <TextView
+            android:id="@+id/textview_regyield_status_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="costPerUnit value"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.aiml.agwarriors.utils.FontTextView
+            android:id="@+id/textview_notification_proposed_cost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Proposed Cost"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+
+        <TextView
+            android:id="@+id/textview_notification_proposed_cost_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="costPerUnit value"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btn_notification_accept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Accept"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_notification_reject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:padding="0dp"
+            android:text="Reject"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</LinearLayout>
