@@ -2,34 +2,35 @@ package com.aiml.agwarriors.view;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiml.agwarriors.R;
-import com.aiml.agwarriors.adapters.YieldListAdapter;
+import com.aiml.agwarriors.adapters.NotificationAdapter;
 import com.aiml.agwarriors.constant.Constant;
 import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.YieldListModel;
 import com.aiml.agwarriors.utils.RecyclerTouchListener;
+import com.aiml.agwarriors.utils.Utils;
 
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class YieldListActivity extends BaseActivity implements IActivity {
+public class NotificationActivity extends BaseActivity implements IActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<YieldListModel> mList;
-    private Button mButton_list_yield;
+
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_list_yield);
+        setContentView(R.layout.activity_notification);
         init();
         initView();
     }
@@ -38,54 +39,53 @@ public class YieldListActivity extends BaseActivity implements IActivity {
     @Override
     public void init() {
         mList = Constant.mList;
-        //initList();
     }
-
-//    private void initList() {
-//        mList = new ArrayList<YieldListModel>();
-//        YieldListModel model = new YieldListModel();
-//        model.setLotnumber("LOT_F1_Y1_4192019");
-//        model.setYield("Mango");
-//        model.setYieldType("Begumpalli");
-//        model.setDate("4/19/2019");
-//        model.setCostPerUnit("100");
-//        model.setStatus("Sent broadcast");
-//        mList.add(model);
-//    }
 
 
     @Override
     public void initView() {
         initHeader();
         initRecyclerView();
-        mButton_list_yield = (Button)findViewById(R.id.button_list_yield);
-        mButton_list_yield.setOnClickListener(this);
     }
 
     private void initHeader() {
         ImageView back = (ImageView) findViewById(R.id.imageview_back);
         TextView title = (TextView) findViewById(R.id.textview_title);
-        ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
         back.setOnClickListener(this);
         back.setVisibility(View.VISIBLE);
-        title.setText("Yield");
+        title.setText("Notification");
     }
 
     private void initRecyclerView() {
-        mRecyclerView = findViewById(R.id.recyclerview_list_yield_holder);
+        mRecyclerView = findViewById(R.id.recyclerview_notification);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new YieldListAdapter(mList);
+        mAdapter = new NotificationAdapter(mList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
                 mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                Bundle bundle = new Bundle();
-                mList.get(position).setFrom(YieldListModel.FROM_REG_YIELD);
-                bundle.putSerializable(Constant.KEY_SEND_BROADCAST,mList.get(position));
-                navigateTo(YieldListActivity.this, ReadYieldDetailActivity.class,bundle, false);
+                switch (view.getId()) {
+                    case R.id.lin_row_list_yield:
+                      //  Toast.makeText(NotificationActivity.this, "position: " + position, Toast.LENGTH_SHORT).show();
+                        Bundle bundle = new Bundle();
+                        mList.get(position).setFrom(YieldListModel.FROM_NOTIFICATION);
+                        bundle.putSerializable(Constant.KEY_SEND_BROADCAST, mList.get(position));
+                        navigateTo(NotificationActivity.this, ReadYieldDetailActivity.class, bundle, false);
+                        break;
+                    case R.id.btn_notification_reject:
+                        Toast.makeText(NotificationActivity.this,"Successfully rejected the deal",Toast.LENGTH_LONG).show();
+                        //Remove from DB
+                        if (Constant.mList.size() > 0) {
+                            Constant.mList.remove(position);
+                        }
+                        break;
+                    case R.id.btn_notification_accept:
+                        Toast.makeText(NotificationActivity.this,"Accepted",Toast.LENGTH_LONG).show();
+                        break;
+                }
             }
 
             @Override
@@ -103,10 +103,11 @@ public class YieldListActivity extends BaseActivity implements IActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(Constant.mList.size() == 0){
+        if (!Utils.isNotificationForSeller(Constant.mList)) {
+            Toast.makeText(NotificationActivity.this,"Notification not found",Toast.LENGTH_LONG).show();
             finish();
         }
-        if(mAdapter != null) {
+        if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -125,9 +126,7 @@ public class YieldListActivity extends BaseActivity implements IActivity {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_list_yield:
-                navigateTo(YieldListActivity.this, RegisterYieldActivity.class, true);
-                break;
+
         }
         super.onClick(view);
     }

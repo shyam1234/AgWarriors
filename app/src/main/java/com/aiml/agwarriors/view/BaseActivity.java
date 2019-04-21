@@ -42,6 +42,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.imageview_back:
                 onBackPressed();
                 break;
+            case R.id.rel_header_notification:
+                navigateTo(BaseActivity.this,NotificationActivity.class,false);
+                break;
         }
     }
 }

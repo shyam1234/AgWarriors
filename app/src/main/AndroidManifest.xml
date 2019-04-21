@@ -55,7 +55,12 @@
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
-            android:name=".view.ReadBroadcastYieldActivity"
+            android:name=".view.ReadYieldDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".view.NotificationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 

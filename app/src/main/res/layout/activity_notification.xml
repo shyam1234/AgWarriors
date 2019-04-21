@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <include
+        android:id="@+id/inc_header"
+        layout="@layout/inc_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_size"
+        android:visibility="visible"></include>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_notification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/inc_header"
+        android:padding="@dimen/commom_padding"></androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

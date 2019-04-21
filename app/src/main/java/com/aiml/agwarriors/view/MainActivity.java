@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.MainScreenModel;
 import com.aiml.agwarriors.utils.CustomDialogbox;
 import com.aiml.agwarriors.utils.RecyclerTouchListener;
+import com.aiml.agwarriors.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,8 @@ public class MainActivity extends BaseActivity implements IActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<MainScreenModel> mList;
+    private RelativeLayout mNotification_holder;
+    private TextView mTextview_header_notification_count;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -56,12 +60,20 @@ public class MainActivity extends BaseActivity implements IActivity {
     }
 
     private void initHeader() {
+        mNotification_holder = (RelativeLayout)findViewById(R.id.rel_header_notification);
+        mTextview_header_notification_count = (TextView) findViewById(R.id.textview_header_notification_count);
         ImageView back = (ImageView) findViewById(R.id.imageview_back);
         TextView title = (TextView) findViewById(R.id.textview_title);
-        ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
         title.setText(R.string.app_name);
         back.setOnClickListener(this);
+        mNotification_holder.setOnClickListener(this);
 
+//        if (!Utils.isNotificationForSeller(Constant.mList)) {
+//            mNotification_holder.setVisibility(View.GONE);
+//        }else{
+//            mNotification_holder.setVisibility(View.VISIBLE);
+//            mTextview_header_notification_count.setText(Utils.getNotificationCountForSeller(Constant.mList));
+//        }
     }
 
     @Override
@@ -107,8 +119,8 @@ public class MainActivity extends BaseActivity implements IActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "Long press on position :" + position,
-                        Toast.LENGTH_LONG).show();
+               // Toast.makeText(MainActivity.this, "Long press on position :" + position,
+                    //    Toast.LENGTH_LONG).show();
             }
         }));
     }
@@ -116,6 +128,18 @@ public class MainActivity extends BaseActivity implements IActivity {
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!Utils.isNotificationForSeller(Constant.mList)) {
+            mNotification_holder.setVisibility(View.GONE);
+        }else{
+            mNotification_holder.setVisibility(View.VISIBLE);
+            mTextview_header_notification_count.setText(Utils.getNotificationCountForSeller(Constant.mList));
+        }
     }
 
     @Override

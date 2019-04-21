@@ -1,6 +1,5 @@
 package com.aiml.agwarriors.view;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,13 +22,8 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
-public class ReadBroadcastYieldActivity extends BaseActivity implements IActivity {
+public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
     private final int AUTOCOMPLETE_REQUEST_CODE = 1;
     private TextView mTextview_regyield_place_to_sell_value;
     private EditText mEdittext_regyield_duration;
@@ -61,10 +56,21 @@ public class ReadBroadcastYieldActivity extends BaseActivity implements IActivit
     private void initHeader() {
         ImageView back = (ImageView) findViewById(R.id.imageview_back);
         TextView title = (TextView) findViewById(R.id.textview_title);
-        ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
         back.setOnClickListener(this);
         back.setVisibility(View.VISIBLE);
         title.setText("Yield Details");
+        if (model != null) {
+            if (model.getFrom() == YieldListModel.FROM_NOTIFICATION) {
+                switch (model.getStatusValue()) {
+                    case YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER:
+                        title.setText("Notification Yield Details");
+                        break;
+                    default:
+                        title.setText("Notification Yield Details");
+                        break;
+                }
+            }
+        }
     }
 
     @Override
@@ -94,11 +100,15 @@ public class ReadBroadcastYieldActivity extends BaseActivity implements IActivit
         spinner_regyield_cost.setEnabled(false);
         mBtn_broadcast = (Button) findViewById(R.id.button_regyield_freeze);
         mBtn_broadcast.setVisibility(View.GONE);
-        Button btn_dismiss = (Button) findViewById(R.id.button_regyield_dismiss);
-        btn_dismiss.setVisibility(View.VISIBLE);
-        btn_dismiss.setOnClickListener(this);
-
-
+        Button dismiss = (Button) findViewById(R.id.button_regyield_dismiss);
+        dismiss.setOnClickListener(this);
+        LinearLayout lin_holder_btn_accept_reject = (LinearLayout) findViewById(R.id.lin_holder_btn_accept_reject);
+        Button button_regyield_accept = (Button) findViewById(R.id.button_regyield_accept);
+        Button button_regyield_reject = (Button) findViewById(R.id.button_regyield_reject);
+        button_regyield_accept.setOnClickListener(this);
+        button_regyield_reject.setOnClickListener(this);
+        dismiss.setVisibility(View.VISIBLE);
+        lin_holder_btn_accept_reject.setVisibility(View.GONE);
         if (model != null) {
             mEdittext_regyield_crop.setText(model.getYield());
             spinner_regyield_crop_type.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.crop_type), model.getYieldType()));
@@ -110,7 +120,13 @@ public class ReadBroadcastYieldActivity extends BaseActivity implements IActivit
             edittext_regyield_cost.setText(model.getCostPerUnit());
             spinner_regyield_cost.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.unit), model.getCostUnit()));
 
+            if (model.getFrom() == YieldListModel.FROM_NOTIFICATION) {
+                dismiss.setVisibility(View.GONE);
+                lin_holder_btn_accept_reject.setVisibility(View.VISIBLE);
+            }
         }
+
+
     }
 
     @Override
@@ -133,12 +149,27 @@ public class ReadBroadcastYieldActivity extends BaseActivity implements IActivit
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
-            case R.id.button_regyield_dismiss:
-                Toast.makeText(ReadBroadcastYieldActivity.this, "Successfully dismissed the broadcast", Toast.LENGTH_LONG).show();
+            case R.id.button_regyield_reject:
                 //Remove from DB
-                if(Constant.mList.size()>0){
-                    for(YieldListModel m: Constant.mList){
-                        if(m.getLotnumber().equalsIgnoreCase(model.getLotnumber())){
+                if (Constant.mList.size() > 0) {
+                    for (YieldListModel m : Constant.mList) {
+                        if (m.getLotnumber().equalsIgnoreCase(model.getLotnumber())) {
+                            //Constant.mList.remove(m);
+                            Toast.makeText(ReadYieldDetailActivity.this, "Successfully rejected", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                finish();
+                break;
+            case R.id.button_regyield_accept:
+                Toast.makeText(ReadYieldDetailActivity.this, "Accepted", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.button_regyield_dismiss:
+                Toast.makeText(ReadYieldDetailActivity.this, "Successfully dismissed", Toast.LENGTH_LONG).show();
+                //Remove from DB
+                if (Constant.mList.size() > 0) {
+                    for (YieldListModel m : Constant.mList) {
+                        if (m.getLotnumber().equalsIgnoreCase(model.getLotnumber())) {
                             Constant.mList.remove(m);
                         }
                     }

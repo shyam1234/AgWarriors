@@ -204,6 +204,8 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         mModel.setCostUnit(mSpinner_regyield_cost.getSelectedItem().toString());
         mModel.setPlaceToSell(mTextview_regyield_place_to_sell_value.getText().toString());
         mModel.setStatus("Sent Broadcast");
+       // mModel.setStatusValue(YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER);
+        mModel.setStatusValue(YieldListModel.STATUS_NOTIFY_TO_SELLER);
         mTextview_regyield_lot_no_value.setText("LOT_"+mModel.getDate()+"_"+mModel.getYield()+"_"+mModel.getYieldType());
         mModel.setLotnumber(mTextview_regyield_lot_no_value.getText().toString().replace("/",""));
         Constant.mList.add(mModel);
