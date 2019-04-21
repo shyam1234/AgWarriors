@@ -39,7 +39,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.costPerUnit.setText("Rs."+mList.get(position).getCostPerUnit()+"/"+mList.get(position).getCostUnit());
         holder.proposedCostPerUnit.setText("Rs."+mList.get(position).getProposedCostPerUnit()+"/"+mList.get(position).getCostUnit());
         holder.status.setText(mList.get(position).getStatus());
-        holder.lot_no.setText(mList.get(position).getLotnumber());
 //        holder.btn_accept.setOnClickListener((View.OnClickListener) this);
 //        holder.btn_reject.setOnClickListener((View.OnClickListener) this);
         holder.place_holder.setTag(position);
@@ -70,9 +69,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             yield = v.findViewById(R.id.textview_regyield_crop_value);
             yield_type = v.findViewById(R.id.textview_regyield_crop_type_value);
             date = v.findViewById(R.id.textview_regyield_duration_value);
-            costPerUnit = v.findViewById(R.id.textview_regyield_status_value);
+            costPerUnit = v.findViewById(R.id.textview_regyield_cost);
             proposedCostPerUnit = v.findViewById(R.id.textview_notification_proposed_cost_value);
-            status = v.findViewById(R.id.textview_regyield_status_value);
+            status = v.findViewById(R.id.textview_notification_status_value);
             place_holder = v.findViewById(R.id.lin_row_list_yield);
            // btn_reject = v.findViewById(R.id.btn_notification_reject);
            // btn_accept = v.findViewById(R.id.btn_notification_accept);

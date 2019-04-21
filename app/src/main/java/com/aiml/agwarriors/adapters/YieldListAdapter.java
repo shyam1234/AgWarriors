@@ -60,7 +60,6 @@ public class YieldListAdapter extends RecyclerView.Adapter<YieldListAdapter.MyVi
         holder.date.setText(mList.get(position).getDate());
         holder.costPerUnit.setText("Rs."+mList.get(position).getCostPerUnit()+"/"+mList.get(position).getCostUnit());
         holder.status.setText(mList.get(position).getStatus());
-        holder.lot_no.setText(mList.get(position).getLotnumber());
         holder.place_holder.setTag(position);
 
     }

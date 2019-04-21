@@ -109,6 +109,8 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         button_regyield_reject.setOnClickListener(this);
         dismiss.setVisibility(View.VISIBLE);
         lin_holder_btn_accept_reject.setVisibility(View.GONE);
+        LinearLayout lin_regyield_bid_cost = (LinearLayout) findViewById(R.id.lin_regyield_bid_cost);
+        EditText edittext_regyield_bid_cost = (EditText)findViewById(R.id.edittext_regyield_bid_cost);
         if (model != null) {
             mEdittext_regyield_crop.setText(model.getYield());
             spinner_regyield_crop_type.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.crop_type), model.getYieldType()));
@@ -123,6 +125,26 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
             if (model.getFrom() == YieldListModel.FROM_NOTIFICATION) {
                 dismiss.setVisibility(View.GONE);
                 lin_holder_btn_accept_reject.setVisibility(View.VISIBLE);
+                switch (model.getStatusValue()){
+                    case YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER:
+                        lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                        edittext_regyield_bid_cost.setEnabled(true);
+                        break;
+                    case YieldListModel.STATUS_DISMISS_BY_SELLER:
+                    case YieldListModel.STATUS_NOTIFY_TO_SELLER:
+                        lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                        edittext_regyield_bid_cost.setEnabled(false);
+                        break;
+                    case YieldListModel.STATUS_ACCEPT_PROPOSAL:
+                    case YieldListModel.STATUS_REJECT_PROPOSAL:
+                        lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                        edittext_regyield_bid_cost.setEnabled(false);
+                        break;
+                    case YieldListModel.STATUS_DISMISS_BY_BUYER:
+                        lin_regyield_bid_cost.setVisibility(View.GONE);
+                        //status update as dismissed by broadcaster
+                        break;
+                }
             }
         }
 
