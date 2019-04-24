@@ -9,6 +9,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.adapters.MainScreenAdapter;
 import com.aiml.agwarriors.constant.Constant;
@@ -19,9 +22,6 @@ import com.aiml.agwarriors.utils.RecyclerTouchListener;
 import com.aiml.agwarriors.utils.Utils;
 
 import java.util.ArrayList;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends BaseActivity implements IActivity {
 
@@ -60,7 +60,10 @@ public class MainActivity extends BaseActivity implements IActivity {
     }
 
     private void initHeader() {
-        mNotification_holder = (RelativeLayout)findViewById(R.id.rel_header_notification);
+        TextView textview_logout = (TextView) findViewById(R.id.textview_loogout);
+        textview_logout.setVisibility(View.VISIBLE);
+        textview_logout.setOnClickListener(this);
+        mNotification_holder = (RelativeLayout) findViewById(R.id.rel_header_notification);
         mTextview_header_notification_count = (TextView) findViewById(R.id.textview_header_notification_count);
         ImageView back = (ImageView) findViewById(R.id.imageview_back);
         TextView title = (TextView) findViewById(R.id.textview_title);
@@ -99,9 +102,9 @@ public class MainActivity extends BaseActivity implements IActivity {
             public void onClick(View view, final int position) {
                 switch (position) {
                     case YIELD:
-                        if (Constant.mList.size()>0) {
+                        if (Constant.mList.size() > 0) {
                             navigateTo(MainActivity.this, YieldListActivity.class, false);
-                        }else {
+                        } else {
                             navigateTo(MainActivity.this, RegisterYieldActivity.class, false);
                         }
                         break;
@@ -119,8 +122,8 @@ public class MainActivity extends BaseActivity implements IActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-               // Toast.makeText(MainActivity.this, "Long press on position :" + position,
-                    //    Toast.LENGTH_LONG).show();
+                // Toast.makeText(MainActivity.this, "Long press on position :" + position,
+                //    Toast.LENGTH_LONG).show();
             }
         }));
     }
@@ -136,7 +139,7 @@ public class MainActivity extends BaseActivity implements IActivity {
         super.onResume();
         if (!Utils.isNotificationForSeller(Constant.mList)) {
             mNotification_holder.setVisibility(View.GONE);
-        }else{
+        } else {
             mNotification_holder.setVisibility(View.VISIBLE);
             mTextview_header_notification_count.setText(Utils.getNotificationCountForSeller(Constant.mList));
         }
@@ -165,6 +168,7 @@ public class MainActivity extends BaseActivity implements IActivity {
         dialogbox.getBtnYes().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });
@@ -184,5 +188,7 @@ public class MainActivity extends BaseActivity implements IActivity {
             }
         });
     }
+
+
 
 }

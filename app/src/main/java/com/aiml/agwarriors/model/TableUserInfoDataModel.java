@@ -1,25 +1,16 @@
 package com.aiml.agwarriors.model;
 
 public class TableUserInfoDataModel {
-
-    private String TABLE_NAME = null;
+    public static  int TYPE_USER_FORMER = 0 ;
+    public static  int TYPE_USER_BUYER = 1 ;
     private String ID = null;
     private String USERNAME = null;
-    private String NAME = null;
     private String PASS = null;
+    private String MOBILENO = null;
     private String ADDRESS = null;
     private String LAT = null;
     private String LONG = null;
     private String TYPE = null;
-
-
-    public String getTABLE_NAME() {
-        return TABLE_NAME;
-    }
-
-    public void setTABLE_NAME(String TABLE_NAME) {
-        this.TABLE_NAME = TABLE_NAME;
-    }
 
     public String getID() {
         return ID;
@@ -29,12 +20,12 @@ public class TableUserInfoDataModel {
         this.ID = ID;
     }
 
-    public String getNAME() {
-        return NAME;
+    public String getMOBILENO() {
+        return MOBILENO;
     }
 
-    public void setNAME(String NAME) {
-        this.NAME = NAME;
+    public void setMOBILENO(String MOBILENO) {
+        this.MOBILENO = MOBILENO;
     }
 
     public String getPASS() {

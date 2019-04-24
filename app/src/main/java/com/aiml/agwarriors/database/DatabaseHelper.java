@@ -15,7 +15,7 @@ import com.aiml.agwarriors.R;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 1;
     private static DatabaseHelper mInstance;
 
     private DatabaseHelper(Context context) {

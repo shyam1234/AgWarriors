@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textview_signup_title"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.5"
                 android:hint="User Name *"
                 android:singleLine="true"
@@ -101,6 +101,7 @@
                 android:weightSum="2">
 
                 <RadioButton
+                    android:checked="true"
                     android:id="@+id/radiobtn_signup_farmer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -119,7 +120,7 @@
                 android:id="@+id/fragment_signup_locate_me"
                 class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="160dp"
                 android:layout_below="@+id/radiogroup_signup_holder"
                 android:layout_marginTop="10dp" />
 
@@ -142,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/fragment_signup_locate_me"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:background="@color/colorRed"
                 android:text="Sign up"
                 android:textColor="@color/colorWhite"

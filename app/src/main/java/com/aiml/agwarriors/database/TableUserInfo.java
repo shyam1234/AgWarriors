@@ -21,8 +21,8 @@ public class TableUserInfo {
     public static final String TABLE_NAME = "table_user_info";
     public static final String ID = "uid";
     public static final String USERNAME = "uname";
-    public static final String NAME = "name";
     public static final String PASS = "pass";
+    public static final String MOBILENO = "mobile_no";
     public static final String ADDRESS = "address";
     public static final String LAT = "lat";
     public static final String LONG = "long";
@@ -33,7 +33,7 @@ public class TableUserInfo {
     public static final String CREATE_TABLE = "Create table " + TABLE_NAME + "( "
             + ID + " varchar(255), "
             + USERNAME + " varchar(255), "
-            + NAME + " varchar(255), "
+            + MOBILENO + " varchar(255), "
             + PASS + " varchar(255), "
             + ADDRESS + " varchar(255), "
             + LAT + " varchar(255), "
@@ -57,7 +57,7 @@ public class TableUserInfo {
 
     //--------------------------------------------------------------------------------------------------------------------
 
-    public synchronized boolean insert(TableUserInfoDataModel holder) {
+    public synchronized long insert(TableUserInfoDataModel holder) {
         try {
             if (mDB != null) {
                 //deleteDataIfExist(holder.getUniversityId(), holder.getConversionId());
@@ -65,20 +65,19 @@ public class TableUserInfo {
                 contentValues.put(ID, holder.getID());
                 contentValues.put(USERNAME, holder.getUSERNAME());
                 contentValues.put(PASS, holder.getPASS());
-                contentValues.put(NAME, holder.getNAME());
+                contentValues.put(MOBILENO, holder.getMOBILENO());
                 contentValues.put(ADDRESS, holder.getADDRESS());
                 contentValues.put(LAT, holder.getLAT());
                 contentValues.put(LONG, holder.getLONG());
                 contentValues.put(TYPE, holder.getTYPE());
-                mDB.insert(TABLE_NAME, null, contentValues);
-                return true;
+                return mDB.insert(TABLE_NAME, null, contentValues);
             } else {
                 Toast.makeText(MyApplication.getInstance().getApplicationContext(), "Need to open DB", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            return false;
+            return 0;
         }
-        return false;
+        return 0;
     }
 
     private synchronized void deleteDataIfExist(int pUserID) {
@@ -91,7 +90,7 @@ public class TableUserInfo {
     }
 
 
-    public synchronized ArrayList<TableUserInfoDataModel> read(int pUserID) {
+    public synchronized ArrayList<TableUserInfoDataModel> read(String pUserID) {
         try {
             ArrayList<TableUserInfoDataModel> list = new ArrayList<>();
             if (mDB != null) {
@@ -105,7 +104,40 @@ public class TableUserInfo {
                         model.setUSERNAME(cursor.getString(cursor.getColumnIndex(USERNAME)));
                         model.setPASS((cursor.getString(cursor.getColumnIndex(PASS))));
                         model.setADDRESS((cursor.getString(cursor.getColumnIndex(ADDRESS))));
-                        model.setNAME((cursor.getString(cursor.getColumnIndex(NAME))));
+                        model.setMOBILENO((cursor.getString(cursor.getColumnIndex(MOBILENO))));
+                        model.setLAT((cursor.getString(cursor.getColumnIndex(LAT))));
+                        model.setLONG((cursor.getString(cursor.getColumnIndex(LONG))));
+                        model.setTYPE((cursor.getString(cursor.getColumnIndex(TYPE))));
+                        list.add(model);
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
+            } else {
+                Toast.makeText(MyApplication.getInstance().getApplicationContext(), "Need to open DB", Toast.LENGTH_SHORT).show();
+            }
+            return list;
+        } catch (Exception e) {
+            AppLog.errLog(TAG, "Exception from insert() " + e.getMessage());
+            return null;
+        }
+    }
+
+    public synchronized ArrayList<TableUserInfoDataModel> checkLogin(String pUserID, String pPass) {
+        try {
+            ArrayList<TableUserInfoDataModel> list = new ArrayList<>();
+            if (mDB != null) {
+                String selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE " + ID + "='" + pUserID + "' AND "
+                        + PASS + "='" + pPass + "'";
+                Cursor cursor = mDB.rawQuery(selectQuery, null);
+                if (cursor.moveToFirst()) {
+                    do {
+                        // get the data into array, or class variable
+                        TableUserInfoDataModel model = new TableUserInfoDataModel();
+                        model.setID(cursor.getString(cursor.getColumnIndex(ID)));
+                        model.setUSERNAME(cursor.getString(cursor.getColumnIndex(USERNAME)));
+                        model.setPASS((cursor.getString(cursor.getColumnIndex(PASS))));
+                        model.setADDRESS((cursor.getString(cursor.getColumnIndex(ADDRESS))));
+                        model.setMOBILENO((cursor.getString(cursor.getColumnIndex(MOBILENO))));
                         model.setLAT((cursor.getString(cursor.getColumnIndex(LAT))));
                         model.setLONG((cursor.getString(cursor.getColumnIndex(LONG))));
                         model.setTYPE((cursor.getString(cursor.getColumnIndex(TYPE))));
@@ -137,7 +169,7 @@ public class TableUserInfo {
                         model.setUSERNAME(cursor.getString(cursor.getColumnIndex(USERNAME)));
                         model.setPASS((cursor.getString(cursor.getColumnIndex(PASS))));
                         model.setADDRESS((cursor.getString(cursor.getColumnIndex(ADDRESS))));
-                        model.setNAME((cursor.getString(cursor.getColumnIndex(NAME))));
+                        model.setMOBILENO((cursor.getString(cursor.getColumnIndex(MOBILENO))));
                         model.setLAT((cursor.getString(cursor.getColumnIndex(LAT))));
                         model.setLONG((cursor.getString(cursor.getColumnIndex(LONG))));
                         model.setTYPE((cursor.getString(cursor.getColumnIndex(TYPE))));
