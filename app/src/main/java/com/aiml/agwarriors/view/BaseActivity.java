@@ -64,6 +64,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 clearLoginDetails();
                 finish();
+                navigateTo(BaseActivity.this,LoginActivity.class);
             }
         });
         dialogbox.getBtnNo().setOnClickListener(new View.OnClickListener() {

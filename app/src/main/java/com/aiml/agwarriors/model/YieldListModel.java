@@ -5,12 +5,16 @@ import java.io.Serializable;
 public class YieldListModel implements Serializable {
     public static final int FROM_NOTIFICATION = 1;
     public static final int FROM_REG_YIELD = 2;
+    public static final int FROM_HISTORY = 3;
+    public static final int FROM_PROPOSAL = 4;
+
     public static final int STATUS_SENT_BRAODCAST_TO_BUYER = 1;
     public static final int STATUS_ACCEPT_PROPOSAL = 2;
     public static final int STATUS_REJECT_PROPOSAL = 3;
     public static final int STATUS_NOTIFY_TO_SELLER = 4;
     public static final int STATUS_DISMISS_BY_BUYER = 5;
     public static final int STATUS_DISMISS_BY_SELLER = 6;
+
     private String lotnumber = "";
     private String yield = "";
     private String yieldType = "";
@@ -21,9 +25,13 @@ public class YieldListModel implements Serializable {
     private String QTY = "";
     private String QTYType = "";
     private String placeToSell = "";
-    private String proposedCostPerUnit = "";
-    private int from;
+    private String bidCostPerUnit;
+    private String userID ="";
+    private String messageTo ="";
+    private String messageFrom ="";
     private int statusValue;
+    private int from;
+
 
 
     public String getLotnumber() {
@@ -106,12 +114,12 @@ public class YieldListModel implements Serializable {
         this.costUnit = costUnit;
     }
 
-    public String getProposedCostPerUnit() {
-        return proposedCostPerUnit;
+    public String getBidCostPerUnit() {
+        return bidCostPerUnit;
     }
 
-    public void setProposedCostPerUnit(String proposedCostPerUnit) {
-        this.proposedCostPerUnit = proposedCostPerUnit;
+    public void setBidCostPerUnit(String bidCostPerUnit) {
+        this.bidCostPerUnit = bidCostPerUnit;
     }
 
 
@@ -129,5 +137,29 @@ public class YieldListModel implements Serializable {
 
     public void setFrom(int from) {
         this.from = from;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getMessageTo() {
+        return messageTo;
+    }
+
+    public void setMessageTo(String messageTo) {
+        this.messageTo = messageTo;
+    }
+
+    public String getMessageFrom() {
+        return messageFrom;
+    }
+
+    public void setMessageFrom(String messageFrom) {
+        this.messageFrom = messageFrom;
     }
 }

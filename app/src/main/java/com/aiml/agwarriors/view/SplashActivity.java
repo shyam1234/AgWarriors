@@ -54,6 +54,7 @@ public class SplashActivity extends BaseActivity implements IActivity {
     private void initDB() {
         //needUpgrade forcefully call to onUpgrade method to check is db need to upgrade.
         DatabaseHelper.getInstance(this);
+
         //DatabaseHelper.getInstance(getApplicationContext()).getReadableDatabase().needUpgrade(DatabaseHelper.DB_VERSION);
 
     }

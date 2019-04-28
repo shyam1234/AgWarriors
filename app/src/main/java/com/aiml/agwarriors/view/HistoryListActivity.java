@@ -20,12 +20,12 @@ import com.aiml.agwarriors.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 
-public class NotificationActivity extends BaseActivity implements IActivity {
+public class HistoryListActivity extends BaseActivity implements IActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<YieldListModel> mNotificationList;
+    private ArrayList<YieldListModel> mHistoryYieldList;
 
 
     @Override
@@ -39,7 +39,7 @@ public class NotificationActivity extends BaseActivity implements IActivity {
 
     @Override
     public void init() {
-        mNotificationList = getNotificationFromDB(Constant.USER_INFO_LIST.get(0).getID());
+        mHistoryYieldList = getHistoryYieldData(Constant.USER_INFO_LIST.get(0).getID());
     }
 
 
@@ -54,7 +54,7 @@ public class NotificationActivity extends BaseActivity implements IActivity {
         TextView title = (TextView) findViewById(R.id.textview_title);
         back.setOnClickListener(this);
         back.setVisibility(View.VISIBLE);
-        title.setText("Notification");
+        title.setText("History Yield Transaction");
     }
 
     private void initRecyclerView() {
@@ -62,7 +62,7 @@ public class NotificationActivity extends BaseActivity implements IActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new NotificationAdapter(mNotificationList);
+        mAdapter = new NotificationAdapter(mHistoryYieldList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
                 mRecyclerView, new RecyclerTouchListener.ClickListener() {
@@ -70,22 +70,12 @@ public class NotificationActivity extends BaseActivity implements IActivity {
             public void onClick(View view, final int position) {
                 switch (view.getId()) {
                     case R.id.lin_row_list_yield:
-                      //  Toast.makeText(NotificationActivity.this, "position: " + position, Toast.LENGTH_SHORT).show();
                         Bundle bundle = new Bundle();
-                        mNotificationList.get(position).setFrom(YieldListModel.FROM_NOTIFICATION);
-                        bundle.putSerializable(Constant.KEY_SEND_BROADCAST, mNotificationList.get(position));
-                        navigateTo(NotificationActivity.this, ReadYieldDetailActivity.class, bundle, false);
+                        mHistoryYieldList.get(position).setFrom(YieldListModel.FROM_HISTORY);
+                        bundle.putSerializable(Constant.KEY_SEND_BROADCAST, mHistoryYieldList.get(position));
+                        Toast.makeText(HistoryListActivity.this, "Coming Soon", Toast.LENGTH_LONG).show();
+                        //navigateTo(HistoryListActivity.this, ReadYieldDetailActivity.class, bundle, false);
                         break;
-//                    case R.id.btn_notification_reject:
-////                        Toast.makeText(NotificationActivity.this,"Successfully rejected the deal",Toast.LENGTH_LONG).show();
-//                        //Remove from DB
-////                        if (mNotificationList.size() > 0) {
-////                            Constant.mListYield.remove(position);
-////                        }
-//                        break;
-//                    case R.id.btn_notification_accept:
-//                        Toast.makeText(NotificationActivity.this,"Accepted",Toast.LENGTH_LONG).show();
-//                        break;
                 }
             }
 
@@ -104,9 +94,9 @@ public class NotificationActivity extends BaseActivity implements IActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mNotificationList = getNotificationFromDB(Constant.USER_INFO_LIST.get(0).getID());
-        if (mNotificationList.size() == 0) {
-            Toast.makeText(NotificationActivity.this,"Notification not found",Toast.LENGTH_LONG).show();
+        mHistoryYieldList = getHistoryYieldData(Constant.USER_INFO_LIST.get(0).getID());
+        if (mHistoryYieldList.size() == 0) {
+            Toast.makeText(HistoryListActivity.this, "History transaction not found", Toast.LENGTH_LONG).show();
             finish();
         }
         if (mAdapter != null) {
@@ -133,15 +123,15 @@ public class NotificationActivity extends BaseActivity implements IActivity {
         super.onClick(view);
     }
 
-    private ArrayList<YieldListModel> getNotificationFromDB(String pUID) {
+    private ArrayList<YieldListModel> getHistoryYieldData(String pUID) {
         ArrayList<YieldListModel> list = new ArrayList<>();
         try {
             TableYield table = new TableYield();
             table.openDB(this);
-            list = table.getNotificationList(pUID);
+            list = table.getHistoryList(pUID);
             table.closeDB();
         } catch (Exception e) {
-            AppLog.errLog("NotificationActivity", "getNotificationFromDB: " + e.getMessage());
+            AppLog.errLog("HistoryListActivity", "getHistoryYieldData: " + e.getMessage());
         } finally {
             return list;
         }

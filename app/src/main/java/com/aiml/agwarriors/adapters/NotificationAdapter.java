@@ -6,12 +6,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.model.YieldListModel;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> {
     private List<YieldListModel> mList;
@@ -32,15 +32,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        if (mList.get(position).getBidCostPerUnit() !=null ){
+            holder.lin_bid_holder.setVisibility(View.VISIBLE);
+            holder.proposedCostPerUnit.setText("Rs."+mList.get(position).getBidCostPerUnit()+"/"+mList.get(position).getCostUnit());
+        }
         holder.lot_no.setText(mList.get(position).getLotnumber());
         holder.yield.setText(mList.get(position).getYield());
         holder.yield_type.setText(mList.get(position).getYieldType());
         holder.date.setText(mList.get(position).getDate());
         holder.costPerUnit.setText("Rs."+mList.get(position).getCostPerUnit()+"/"+mList.get(position).getCostUnit());
-        holder.proposedCostPerUnit.setText("Rs."+mList.get(position).getProposedCostPerUnit()+"/"+mList.get(position).getCostUnit());
         holder.status.setText(mList.get(position).getStatus());
-//        holder.btn_accept.setOnClickListener((View.OnClickListener) this);
-//        holder.btn_reject.setOnClickListener((View.OnClickListener) this);
         holder.place_holder.setTag(position);
 
     }
@@ -52,6 +53,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+        private final LinearLayout lin_bid_holder;
         public final TextView lot_no;
         private final TextView yield;
         private final TextView yield_type;
@@ -65,6 +67,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         public MyViewHolder(View v) {
             super(v);
+            lin_bid_holder = v.findViewById(R.id.lin_bid_holder);
             lot_no = v.findViewById(R.id.textview_regyield_lot_no_value);
             yield = v.findViewById(R.id.textview_regyield_crop_value);
             yield_type = v.findViewById(R.id.textview_regyield_crop_type_value);

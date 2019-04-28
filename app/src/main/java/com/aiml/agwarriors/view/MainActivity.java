@@ -15,20 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.adapters.MainScreenAdapter;
 import com.aiml.agwarriors.constant.Constant;
+import com.aiml.agwarriors.database.TableYield;
 import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.MainScreenModel;
+import com.aiml.agwarriors.model.YieldListModel;
+import com.aiml.agwarriors.utils.AppLog;
 import com.aiml.agwarriors.utils.CustomDialogbox;
 import com.aiml.agwarriors.utils.RecyclerTouchListener;
-import com.aiml.agwarriors.utils.Utils;
 
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements IActivity {
 
-    private final int YIELD = 0;
-    private final int HISTORY = 1;
-    private final int GENERAL_INFO = 2;
-    private final int ANALYTICS = 3;
+    private final String YIELD = "Yield";
+    private final String NOTIFICATION = "Notification";
+    private final String HISTORY = "History";
+    private final String GENERAL_INFO = "General Information";
+    private final String ANALYTICS = "Analytics";
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -36,27 +39,48 @@ public class MainActivity extends BaseActivity implements IActivity {
     private ArrayList<MainScreenModel> mList;
     private RelativeLayout mNotification_holder;
     private TextView mTextview_header_notification_count;
+    private ArrayList<YieldListModel> mListNotification;
+    private ArrayList<YieldListModel> mListYieldBroadCast;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
         init();
+        switch (Constant.USER_INFO_LIST.get(0).getTYPE()) {
+            case Constant.USER_FARMER:
+                setTheme(R.style.AppThemeFarmer);
+                mListNotification = getNotification(Constant.USER_INFO_LIST.get(0).getID());
+                mListYieldBroadCast = getBroadcastForSeller(Constant.USER_INFO_LIST.get(0).getID());
+                initListForFarmer();
+                break;
+            case Constant.USER_BUYER:
+                setTheme(R.style.AppThemeBuyer);
+                mListNotification = getNotificationForBuyerFromDB(Constant.USER_INFO_LIST.get(0).getID());
+                mListYieldBroadCast = getBoradcastListForBuyer(Constant.USER_INFO_LIST.get(0).getID());
+                initListForBuyer();
+                break;
+        }
         initView();
     }
 
     @Override
     public void init() {
         mList = new ArrayList<MainScreenModel>();
-        initList();
     }
 
-    private void initList() {
-        mList.add(new MainScreenModel("Yield"));
-        mList.add(new MainScreenModel("History"));
-        mList.add(new MainScreenModel("General Information"));
-        mList.add(new MainScreenModel("Analytics"));
 
+    private void initListForFarmer() {
+        mList.add(new MainScreenModel(YIELD));
+        mList.add(new MainScreenModel(HISTORY));
+        mList.add(new MainScreenModel(GENERAL_INFO));
+        mList.add(new MainScreenModel(ANALYTICS));
+    }
+
+    private void initListForBuyer() {
+        mList.add(new MainScreenModel(NOTIFICATION));
+        mList.add(new MainScreenModel(HISTORY));
+        mList.add(new MainScreenModel(ANALYTICS));
     }
 
     private void initHeader() {
@@ -70,13 +94,6 @@ public class MainActivity extends BaseActivity implements IActivity {
         title.setText(R.string.app_name);
         back.setOnClickListener(this);
         mNotification_holder.setOnClickListener(this);
-
-//        if (!Utils.isNotificationForSeller(Constant.mList)) {
-//            mNotification_holder.setVisibility(View.GONE);
-//        }else{
-//            mNotification_holder.setVisibility(View.VISIBLE);
-//            mTextview_header_notification_count.setText(Utils.getNotificationCountForSeller(Constant.mList));
-//        }
     }
 
     @Override
@@ -100,22 +117,25 @@ public class MainActivity extends BaseActivity implements IActivity {
                 recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                switch (position) {
+                switch (mList.get(position).getLabel()) {
                     case YIELD:
-                        if (Constant.mList.size() > 0) {
+                        if (mListYieldBroadCast.size() > 0) {
                             navigateTo(MainActivity.this, YieldListActivity.class, false);
                         } else {
                             navigateTo(MainActivity.this, RegisterYieldActivity.class, false);
                         }
                         break;
-                    case GENERAL_INFO:
-                        Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-                        break;
                     case HISTORY:
+                        navigateTo(MainActivity.this, HistoryListActivity.class, false);
+                        break;
+                    case GENERAL_INFO:
                         Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                     case ANALYTICS:
                         Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                        break;
+                    case NOTIFICATION:
+                        navigateTo(MainActivity.this, BuyerProposalActivity.class, false);
                         break;
                 }
             }
@@ -137,11 +157,27 @@ public class MainActivity extends BaseActivity implements IActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!Utils.isNotificationForSeller(Constant.mList)) {
-            mNotification_holder.setVisibility(View.GONE);
-        } else {
-            mNotification_holder.setVisibility(View.VISIBLE);
-            mTextview_header_notification_count.setText(Utils.getNotificationCountForSeller(Constant.mList));
+        switch (Constant.USER_INFO_LIST.get(0).getTYPE()) {
+            case Constant.USER_FARMER:
+                mListNotification = getNotification(Constant.USER_INFO_LIST.get(0).getID());
+                mListYieldBroadCast = getBroadcastForSeller(Constant.USER_INFO_LIST.get(0).getID());
+                if (mListNotification != null && mListNotification.size() > 0) {
+                    mNotification_holder.setVisibility(View.VISIBLE);
+                    mTextview_header_notification_count.setText(""+mListNotification.size());
+                } else {
+                    mNotification_holder.setVisibility(View.GONE);
+                }
+                break;
+            case Constant.USER_BUYER:
+                mListNotification = getNotification(Constant.USER_INFO_LIST.get(0).getID());
+                mListYieldBroadCast = getBoradcastListForBuyer(Constant.USER_INFO_LIST.get(0).getID());
+                if (mListNotification != null && mListNotification.size() > 0) {
+                    mNotification_holder.setVisibility(View.VISIBLE);
+                    mTextview_header_notification_count.setText(""+mListNotification.size());
+                } else {
+                    mNotification_holder.setVisibility(View.GONE);
+                }
+                break;
         }
     }
 
@@ -190,5 +226,60 @@ public class MainActivity extends BaseActivity implements IActivity {
     }
 
 
+    private ArrayList<YieldListModel> getNotification(String pUID) {
+        ArrayList<YieldListModel> list = new ArrayList<>();
+        try {
+            TableYield table = new TableYield();
+            table.openDB(this);
+            list = table.getNotificationList(pUID);
+            table.closeDB();
+        } catch (Exception e) {
+            AppLog.errLog("MainActivity", "getNotification: " + e.getMessage());
+        } finally {
+            return list;
+        }
+    }
+
+    private ArrayList<YieldListModel> getNotificationForBuyerFromDB(String pUID) {
+        ArrayList<YieldListModel> list = new ArrayList<>();
+        try {
+            TableYield table = new TableYield();
+            table.openDB(this);
+            list = table.getNotificationListForBuyer(pUID);
+            table.closeDB();
+        } catch (Exception e) {
+            AppLog.errLog("MainActivity", "getNotificationForBuyerFromDB: " + e.getMessage());
+        } finally {
+            return list;
+        }
+    }
+
+    private ArrayList<YieldListModel> getBroadcastForSeller(String pUID) {
+        ArrayList<YieldListModel> list = new ArrayList<>();
+        try {
+            TableYield table = new TableYield();
+            table.openDB(this);
+            list = table.getBroadcastForSeller(pUID);
+            table.closeDB();
+        } catch (Exception e) {
+            AppLog.errLog("MainActivity", "getBroadcastForSeller: " + e.getMessage());
+        } finally {
+            return list;
+        }
+    }
+
+    private ArrayList<YieldListModel> getBoradcastListForBuyer(String pUID) {
+        ArrayList<YieldListModel> list = new ArrayList<>();
+        try {
+            TableYield table = new TableYield();
+            table.openDB(this);
+            list = table.getProposalForBuyer(pUID);
+            table.closeDB();
+        } catch (Exception e) {
+            AppLog.errLog("MainActivity", "getBoradcastListForBuyer: " + e.getMessage());
+        } finally {
+            return list;
+        }
+    }
 
 }

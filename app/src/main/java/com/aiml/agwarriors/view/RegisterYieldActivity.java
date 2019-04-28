@@ -18,8 +18,10 @@ import android.widget.Toast;
 
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.constant.Constant;
+import com.aiml.agwarriors.database.TableYield;
 import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.YieldListModel;
+import com.aiml.agwarriors.utils.AppLog;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -195,6 +197,10 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
     }
 
     private void addDataIntoList() {
+        mModel.setBidCostPerUnit(null);
+        mModel.setUserID(Constant.USER_INFO_LIST.get(0).getID());
+        mModel.setMessageTo("BUYER_B123");
+        mModel.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
         mModel.setYield(mEdittext_regyield_crop.getText().toString());
         mModel.setYieldType(mSpinner_regyield_crop_type.getSelectedItem().toString());
         mModel.setDate(mEdittext_regyield_duration.getText().toString());
@@ -204,11 +210,22 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         mModel.setCostUnit(mSpinner_regyield_cost.getSelectedItem().toString());
         mModel.setPlaceToSell(mTextview_regyield_place_to_sell_value.getText().toString());
         mModel.setStatus("Sent Broadcast");
-       // mModel.setStatusValue(YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER);
-        mModel.setStatusValue(YieldListModel.STATUS_NOTIFY_TO_SELLER);
+        mModel.setStatusValue(YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER);
         mTextview_regyield_lot_no_value.setText("LOT_"+mModel.getDate()+"_"+mModel.getYield()+"_"+mModel.getYieldType());
         mModel.setLotnumber(mTextview_regyield_lot_no_value.getText().toString().replace("/",""));
-        Constant.mList.add(mModel);
+        saveToYieldDB(mModel);
+    }
+
+    private void saveToYieldDB(YieldListModel pModel) {
+        long row = 0;
+        try {
+            TableYield table = new TableYield();
+            table.openDB(this);
+            row = table.insert(pModel);
+            table.closeDB();
+        } catch (Exception e) {
+            AppLog.errLog("RegisterYieldActivity", "saveToYieldDB: " + row + e.getMessage());
+        }
     }
 
     private void showCalender() {

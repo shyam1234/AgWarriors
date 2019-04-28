@@ -14,14 +14,24 @@ import android.widget.Toast;
 
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.constant.Constant;
+import com.aiml.agwarriors.database.TableYield;
 import com.aiml.agwarriors.interfaces.IActivity;
+import com.aiml.agwarriors.model.TableUserInfoDataModel;
 import com.aiml.agwarriors.model.YieldListModel;
+import com.aiml.agwarriors.utils.AppLog;
 import com.aiml.agwarriors.utils.Utils;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
+
+import java.util.ArrayList;
+
+import static com.aiml.agwarriors.model.YieldListModel.FROM_HISTORY;
+import static com.aiml.agwarriors.model.YieldListModel.FROM_NOTIFICATION;
+import static com.aiml.agwarriors.model.YieldListModel.FROM_PROPOSAL;
+import static com.aiml.agwarriors.model.YieldListModel.FROM_REG_YIELD;
 
 public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
     private final int AUTOCOMPLETE_REQUEST_CODE = 1;
@@ -32,6 +42,10 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
     private YieldListModel model;
     private EditText mEdittext_regyield_crop;
     private EditText mQty;
+    private EditText mEdittext_regyield_bid_cost;
+    private Button mButton_regyield_accept;
+    private Button mButton_regyield_reject;
+    //private ArrayList<YieldListModel> mFarmerInfo;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -48,10 +62,13 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
             model = (YieldListModel) bundle.get(Constant.KEY_SEND_BROADCAST);
         }
 
+        //mFarmerInfo = getFarmerUserID(model);
+
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), "AIzaSyDgNfUmVAi0PTVWEpqIGrMBoP-RGFWNjcA");
         }
     }
+
 
     private void initHeader() {
         ImageView back = (ImageView) findViewById(R.id.imageview_back);
@@ -60,15 +77,19 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         back.setVisibility(View.VISIBLE);
         title.setText("Yield Details");
         if (model != null) {
-            if (model.getFrom() == YieldListModel.FROM_NOTIFICATION) {
-                switch (model.getStatusValue()) {
-                    case YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER:
-                        title.setText("Notification Yield Details");
-                        break;
-                    default:
-                        title.setText("Notification Yield Details");
-                        break;
-                }
+            switch (model.getFrom()) {
+                case FROM_PROPOSAL:
+                    title.setText("Proposal Details");
+                    break;
+                case FROM_HISTORY:
+                    title.setText("History Details");
+                    break;
+                case FROM_NOTIFICATION:
+                    title.setText("Notification Details");
+                    break;
+                case FROM_REG_YIELD:
+                    title.setText("Yield Registration Details");
+                    break;
             }
         }
     }
@@ -103,15 +124,17 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         Button dismiss = (Button) findViewById(R.id.button_regyield_dismiss);
         dismiss.setOnClickListener(this);
         LinearLayout lin_holder_btn_accept_reject = (LinearLayout) findViewById(R.id.lin_holder_btn_accept_reject);
-        Button button_regyield_accept = (Button) findViewById(R.id.button_regyield_accept);
-        Button button_regyield_reject = (Button) findViewById(R.id.button_regyield_reject);
-        button_regyield_accept.setOnClickListener(this);
-        button_regyield_reject.setOnClickListener(this);
+        mButton_regyield_accept = (Button) findViewById(R.id.button_regyield_accept);
+        mButton_regyield_reject = (Button) findViewById(R.id.button_regyield_reject);
+        mButton_regyield_accept.setOnClickListener(this);
+        mButton_regyield_reject.setOnClickListener(this);
         dismiss.setVisibility(View.VISIBLE);
         lin_holder_btn_accept_reject.setVisibility(View.GONE);
         LinearLayout lin_regyield_bid_cost = (LinearLayout) findViewById(R.id.lin_regyield_bid_cost);
-        EditText edittext_regyield_bid_cost = (EditText)findViewById(R.id.edittext_regyield_bid_cost);
+        mEdittext_regyield_bid_cost = (EditText) findViewById(R.id.edittext_regyield_bid_cost);
+
         if (model != null) {
+            mEdittext_regyield_bid_cost.setText(model.getBidCostPerUnit());
             mEdittext_regyield_crop.setText(model.getYield());
             spinner_regyield_crop_type.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.crop_type), model.getYieldType()));
             mQty.setText(model.getQTY());
@@ -122,32 +145,62 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
             edittext_regyield_cost.setText(model.getCostPerUnit());
             spinner_regyield_cost.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.unit), model.getCostUnit()));
 
-            if (model.getFrom() == YieldListModel.FROM_NOTIFICATION) {
-                dismiss.setVisibility(View.GONE);
-                lin_holder_btn_accept_reject.setVisibility(View.VISIBLE);
-                switch (model.getStatusValue()){
-                    case YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER:
+            switch (model.getFrom()) {
+                case FROM_PROPOSAL:
+                    dismiss.setVisibility(View.GONE);
+                    mButton_regyield_accept.setText("Notify");
+                    mButton_regyield_reject.setText("Reject");
+                    lin_holder_btn_accept_reject.setVisibility(View.VISIBLE);
+                    break;
+                case FROM_NOTIFICATION:
+                    if (Constant.USER_INFO_LIST.get(0).getTYPE().equalsIgnoreCase(TableUserInfoDataModel.TYPE_USER_BUYER)) {
+                        dismiss.setVisibility(View.GONE);
+                        lin_holder_btn_accept_reject.setVisibility(View.GONE);
                         lin_regyield_bid_cost.setVisibility(View.VISIBLE);
-                        edittext_regyield_bid_cost.setEnabled(true);
-                        break;
-                    case YieldListModel.STATUS_DISMISS_BY_SELLER:
-                    case YieldListModel.STATUS_NOTIFY_TO_SELLER:
-                        lin_regyield_bid_cost.setVisibility(View.VISIBLE);
-                        edittext_regyield_bid_cost.setEnabled(false);
-                        break;
-                    case YieldListModel.STATUS_ACCEPT_PROPOSAL:
-                    case YieldListModel.STATUS_REJECT_PROPOSAL:
-                        lin_regyield_bid_cost.setVisibility(View.VISIBLE);
-                        edittext_regyield_bid_cost.setEnabled(false);
-                        break;
-                    case YieldListModel.STATUS_DISMISS_BY_BUYER:
-                        lin_regyield_bid_cost.setVisibility(View.GONE);
-                        //status update as dismissed by broadcaster
-                        break;
-                }
+                        mEdittext_regyield_bid_cost.setEnabled(false);
+                        if (model.getBidCostPerUnit() == null) {
+                            mEdittext_regyield_bid_cost.setText("Pending");
+                        }
+                    } else {
+                        switch (model.getStatusValue()) {
+                            case YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER:
+                                lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                                mEdittext_regyield_bid_cost.setEnabled(false);
+                                dismiss.setVisibility(View.VISIBLE);
+                                lin_holder_btn_accept_reject.setVisibility(View.GONE);
+                                break;
+                            case YieldListModel.STATUS_DISMISS_BY_SELLER:
+                                dismiss.setVisibility(View.GONE);
+                                lin_regyield_bid_cost.setVisibility(View.GONE);
+                                lin_holder_btn_accept_reject.setVisibility(View.GONE);
+                                break;
+                            case YieldListModel.STATUS_NOTIFY_TO_SELLER:
+                                lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                                mEdittext_regyield_bid_cost.setEnabled(false);
+                                dismiss.setVisibility(View.GONE);
+                                lin_holder_btn_accept_reject.setVisibility(View.VISIBLE);
+                                break;
+                            case YieldListModel.STATUS_ACCEPT_PROPOSAL:
+                            case YieldListModel.STATUS_REJECT_PROPOSAL:
+                                mEdittext_regyield_bid_cost.setEnabled(false);
+                                lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                                lin_holder_btn_accept_reject.setVisibility(View.GONE);
+                                break;
+                            case YieldListModel.STATUS_DISMISS_BY_BUYER:
+                                dismiss.setVisibility(View.GONE);
+                                lin_regyield_bid_cost.setVisibility(View.GONE);
+                                lin_holder_btn_accept_reject.setVisibility(View.GONE);
+                                //status update as dismissed by broadcaster
+                                break;
+                        }
+                    }
+                    break;
+                case FROM_REG_YIELD:
+                    break;
+                case FROM_HISTORY:
+                    break;
             }
         }
-
 
     }
 
@@ -169,36 +222,64 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
 
     @Override
     public void onClick(View view) {
-        super.onClick(view);
-        switch (view.getId()) {
-            case R.id.button_regyield_reject:
-                //Remove from DB
-                if (Constant.mList.size() > 0) {
-                    for (YieldListModel m : Constant.mList) {
-                        if (m.getLotnumber().equalsIgnoreCase(model.getLotnumber())) {
-                            //Constant.mList.remove(m);
-                            Toast.makeText(ReadYieldDetailActivity.this, "Successfully rejected", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }
-                finish();
-                break;
-            case R.id.button_regyield_accept:
-                Toast.makeText(ReadYieldDetailActivity.this, "Accepted", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.button_regyield_dismiss:
-                Toast.makeText(ReadYieldDetailActivity.this, "Successfully dismissed", Toast.LENGTH_LONG).show();
-                //Remove from DB
-                if (Constant.mList.size() > 0) {
-                    for (YieldListModel m : Constant.mList) {
-                        if (m.getLotnumber().equalsIgnoreCase(model.getLotnumber())) {
-                            Constant.mList.remove(m);
-                        }
-                    }
-                }
-                finish();
-                break;
+        if (((String) Constant.USER_INFO_LIST.get(0).getID().subSequence(0, 5)).equalsIgnoreCase("Buyer")) {
+            if (mEdittext_regyield_bid_cost.getText() != null) {
+                model.setBidCostPerUnit(mEdittext_regyield_bid_cost.getText().toString());
+            } else {
+                Toast.makeText(ReadYieldDetailActivity.this, "Bid should not be empty", Toast.LENGTH_LONG).show();
+                return;
+            }
+            switch (view.getId()) {
+                case R.id.button_regyield_reject:
+                    model.setStatusValue(YieldListModel.STATUS_DISMISS_BY_BUYER);
+                    model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
+                    model.setStatus("Rejected By " + model.getMessageFrom());
+                    model.setMessageTo(model.getUserID());
+                    updateYieldDB(model);
+                    Toast.makeText(ReadYieldDetailActivity.this, "Rejected Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
+                    finish();
+                    break;
+                case R.id.button_regyield_accept:
+                    model.setStatusValue(YieldListModel.STATUS_NOTIFY_TO_SELLER);
+                    model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
+                    model.setStatus("Notified By " + model.getMessageFrom());
+                    model.setMessageTo(model.getUserID());
+                    updateYieldDB(model);
+                    Toast.makeText(ReadYieldDetailActivity.this, "Accepted Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
+                    finish();
+                    break;
+            }
+        } else {
+            //Former section
+            model.setMessageTo("BUYER_B123");
+            switch (view.getId()) {
+                case R.id.button_regyield_reject:
+                    model.setStatusValue(YieldListModel.STATUS_REJECT_PROPOSAL);
+                    model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
+                    model.setStatus("Rejected By " + model.getMessageFrom());
+                    updateYieldDB(model);
+                    Toast.makeText(ReadYieldDetailActivity.this, "Rejected Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
+                    finish();
+                    break;
+                case R.id.button_regyield_accept:
+                    model.setStatusValue(YieldListModel.STATUS_ACCEPT_PROPOSAL);
+                    model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
+                    model.setStatus("Accepted By " + model.getMessageFrom());
+                    updateYieldDB(model);
+                    Toast.makeText(ReadYieldDetailActivity.this, "Accepted Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
+                    finish();
+                    break;
+                case R.id.button_regyield_dismiss:
+                    model.setStatusValue(YieldListModel.STATUS_DISMISS_BY_SELLER);
+                    model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
+                    model.setStatus("Dismissed By " + model.getMessageFrom());
+                    updateYieldDB(model);
+                    Toast.makeText(ReadYieldDetailActivity.this, "Successfully dismissed By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
+                    finish();
+                    break;
+            }
         }
+        super.onClick(view);
     }
 
 
@@ -217,6 +298,32 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }
+        }
+    }
+
+    private void updateYieldDB(YieldListModel pModel) {
+        try {
+            TableYield table = new TableYield();
+            table.openDB(this);
+            table.update(pModel);
+            table.closeDB();
+        } catch (Exception e) {
+            AppLog.errLog("ReadYieldDetailActivity", "updateYieldDBForBuyer: " + e.getMessage());
+        }
+    }
+
+
+    private ArrayList<YieldListModel> getFarmerUserID(YieldListModel pModel) {
+        ArrayList<YieldListModel> list = new ArrayList<>();
+        try {
+            TableYield table = new TableYield();
+            table.openDB(this);
+            list = table.getUserIDForLotAndBuyer(pModel.getLotnumber(), pModel.getUserID());
+            table.closeDB();
+        } catch (Exception e) {
+            AppLog.errLog("NotificationActivity", "getFarmerUserID: " + e.getMessage());
+        } finally {
+            return list;
         }
     }
 

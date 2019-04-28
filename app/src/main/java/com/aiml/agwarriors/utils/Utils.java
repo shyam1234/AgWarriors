@@ -32,7 +32,8 @@ public class Utils {
         int counter = 0;
         if (pList != null && pList.size() > 0) {
             for (YieldListModel model : pList) {
-                if (model.getStatusValue() == YieldListModel.STATUS_NOTIFY_TO_SELLER) {
+                if (model.getStatusValue() == YieldListModel.STATUS_NOTIFY_TO_SELLER ||
+                        model.getStatusValue() == YieldListModel.STATUS_DISMISS_BY_BUYER) {
                     counter++;
                 }
             }

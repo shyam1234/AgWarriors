@@ -6,25 +6,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.adapters.YieldListAdapter;
 import com.aiml.agwarriors.constant.Constant;
+import com.aiml.agwarriors.database.TableYield;
 import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.YieldListModel;
+import com.aiml.agwarriors.utils.AppLog;
 import com.aiml.agwarriors.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class YieldListActivity extends BaseActivity implements IActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<YieldListModel> mList;
     private Button mButton_list_yield;
+    private ArrayList<YieldListModel> mListYieldBroadCast;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -37,35 +39,21 @@ public class YieldListActivity extends BaseActivity implements IActivity {
 
     @Override
     public void init() {
-        mList = Constant.mList;
-        //initList();
+        mListYieldBroadCast = getBoradcastList(Constant.USER_INFO_LIST.get(0).getID());
     }
-
-//    private void initList() {
-//        mList = new ArrayList<YieldListModel>();
-//        YieldListModel model = new YieldListModel();
-//        model.setLotnumber("LOT_F1_Y1_4192019");
-//        model.setYield("Mango");
-//        model.setYieldType("Begumpalli");
-//        model.setDate("4/19/2019");
-//        model.setCostPerUnit("100");
-//        model.setStatus("Sent broadcast");
-//        mList.add(model);
-//    }
 
 
     @Override
     public void initView() {
         initHeader();
         initRecyclerView();
-        mButton_list_yield = (Button)findViewById(R.id.button_list_yield);
+        mButton_list_yield = (Button) findViewById(R.id.button_list_yield);
         mButton_list_yield.setOnClickListener(this);
     }
 
     private void initHeader() {
         ImageView back = (ImageView) findViewById(R.id.imageview_back);
         TextView title = (TextView) findViewById(R.id.textview_title);
-        ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
         back.setOnClickListener(this);
         back.setVisibility(View.VISIBLE);
         title.setText("Yield");
@@ -76,16 +64,16 @@ public class YieldListActivity extends BaseActivity implements IActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new YieldListAdapter(mList);
+        mAdapter = new YieldListAdapter(mListYieldBroadCast);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
                 mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
                 Bundle bundle = new Bundle();
-                mList.get(position).setFrom(YieldListModel.FROM_REG_YIELD);
-                bundle.putSerializable(Constant.KEY_SEND_BROADCAST,mList.get(position));
-                navigateTo(YieldListActivity.this, ReadYieldDetailActivity.class,bundle, false);
+                mListYieldBroadCast.get(position).setFrom(YieldListModel.FROM_REG_YIELD);
+                bundle.putSerializable(Constant.KEY_SEND_BROADCAST, mListYieldBroadCast.get(position));
+                navigateTo(YieldListActivity.this, ReadYieldDetailActivity.class, bundle, false);
             }
 
             @Override
@@ -103,13 +91,9 @@ public class YieldListActivity extends BaseActivity implements IActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(Constant.mList.size() == 0){
-            finish();
-        }
-        if(mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-        }
+        readYieldDB();
     }
+
 
     @Override
     public void onStop() {
@@ -132,4 +116,32 @@ public class YieldListActivity extends BaseActivity implements IActivity {
         super.onClick(view);
     }
 
+
+    private void readYieldDB() {
+        try {
+            mListYieldBroadCast = getBoradcastList(Constant.USER_INFO_LIST.get(0).getID());
+            if (mListYieldBroadCast.size() == 0) {
+                finish();
+            }
+            if (mAdapter != null) {
+                mAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            AppLog.errLog("YieldListActivity", "readYieldDB: " + e.getMessage());
+        }
+    }
+
+    private ArrayList<YieldListModel> getBoradcastList(String pUID) {
+        ArrayList<YieldListModel> list = new ArrayList<>();
+        try {
+            TableYield table = new TableYield();
+            table.openDB(this);
+            list = table.getBroadcastForSeller(pUID);
+            table.closeDB();
+        } catch (Exception e) {
+            AppLog.errLog("YieldListActivity", "getBoradcastList: " + e.getMessage());
+        } finally {
+            return list;
+        }
+    }
 }

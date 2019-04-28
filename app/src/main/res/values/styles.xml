@@ -10,4 +10,21 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppThemeFarmer" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimaryF</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkF</item>
+        <item name="colorAccent">@color/colorAccentF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="AppThemeBuyer" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimaryB</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkB</item>
+        <item name="colorAccent">@color/colorAccentB</item>
+        <item name="android:textStyle">normal</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

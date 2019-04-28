@@ -1,8 +1,8 @@
 package com.aiml.agwarriors.model;
 
 public class TableUserInfoDataModel {
-    public static  int TYPE_USER_FORMER = 0 ;
-    public static  int TYPE_USER_BUYER = 1 ;
+    public static  String TYPE_USER_FARMER = "Farmer" ;
+    public static  String TYPE_USER_BUYER = "Buyer" ;
     private String ID = null;
     private String USERNAME = null;
     private String PASS = null;
