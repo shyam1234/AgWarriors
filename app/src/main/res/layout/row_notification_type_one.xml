@@ -43,7 +43,7 @@
             android:padding="0dp"
             android:text="LOT_DATE_NO_ID"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/button_size_small"
+            android:textSize="@dimen/button_size_micro_small"
             android:textStyle="bold" />
 
     </LinearLayout>

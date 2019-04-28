@@ -45,6 +45,9 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
     private EditText mEdittext_regyield_bid_cost;
     private Button mButton_regyield_accept;
     private Button mButton_regyield_reject;
+    private Spinner mSpinnerBidCostUnit;
+    private View mFragment_regyield_locate_buyer;
+    private EditText mEdittext_regyield_cost;
     //private ArrayList<YieldListModel> mFarmerInfo;
 
     @Override
@@ -99,24 +102,31 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         initHeader();
         mEdittext_regyield_crop = (EditText) findViewById(R.id.edittext_regyield_crop);
         mEdittext_regyield_crop.setEnabled(false);
+        mQty = (EditText) findViewById(R.id.edittext_regyield_yieldin);
+        mQty.setEnabled(false);
+        mEdittext_regyield_duration = (EditText) findViewById(R.id.edittext_regyield_duration);
+        mEdittext_regyield_duration.setEnabled(false);
+        mTextview_regyield_place_to_sell_value = findViewById(R.id.textview_regyield_place_to_sell_value);
+        mEdittext_regyield_cost = (EditText) findViewById(R.id.edittext_regyield_cost);
+        mEdittext_regyield_cost.setEnabled(false);
+        mEdittext_regyield_bid_cost = (EditText) findViewById(R.id.edittext_regyield_bid_cost);
+
+
         Button button_regyield_smartanalysis = (Button) findViewById(R.id.button_regyield_smartanalysis);
         button_regyield_smartanalysis.setVisibility(View.GONE);
         Spinner spinner_regyield_crop_type = (Spinner) findViewById(R.id.spinner_regyield_crop_type);
         spinner_regyield_crop_type.setEnabled(false);
-        mQty = (EditText) findViewById(R.id.edittext_regyield_yieldin);
-        mQty.setEnabled(false);
+
         Spinner spinner_regyield_unit = (Spinner) findViewById(R.id.spinner_regyield_unit);
         spinner_regyield_unit.setEnabled(false);
-        mEdittext_regyield_duration = (EditText) findViewById(R.id.edittext_regyield_duration);
-        mEdittext_regyield_duration.setEnabled(false);
+
         mImageview_regyield_cal = (ImageView) findViewById(R.id.imageview_regyield_cal);
         mImageview_regyield_cal.setVisibility(View.GONE);
         TextView textview_regyield_lot_no_value = (TextView) findViewById(R.id.textview_regyield_lot_no_value);
         Button button_regyield_Analysis = (Button) findViewById(R.id.button_regyield_Analysis);
         button_regyield_Analysis.setVisibility(View.GONE);
-        mTextview_regyield_place_to_sell_value = findViewById(R.id.textview_regyield_place_to_sell_value);
-        EditText edittext_regyield_cost = (EditText) findViewById(R.id.edittext_regyield_cost);
-        edittext_regyield_cost.setEnabled(false);
+
+
         Spinner spinner_regyield_cost = (Spinner) findViewById(R.id.spinner_regyield_cost);
         spinner_regyield_cost.setEnabled(false);
         mBtn_broadcast = (Button) findViewById(R.id.button_regyield_freeze);
@@ -131,40 +141,60 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         dismiss.setVisibility(View.VISIBLE);
         lin_holder_btn_accept_reject.setVisibility(View.GONE);
         LinearLayout lin_regyield_bid_cost = (LinearLayout) findViewById(R.id.lin_regyield_bid_cost);
-        mEdittext_regyield_bid_cost = (EditText) findViewById(R.id.edittext_regyield_bid_cost);
+
+        mSpinnerBidCostUnit = (Spinner) findViewById(R.id.spinner_regyield_bid_cost_unit);
+        mSpinnerBidCostUnit.setEnabled(false);
+        mFragment_regyield_locate_buyer =  findViewById(R.id.fragment_regyield_locate_buyer);
 
         if (model != null) {
-            mEdittext_regyield_bid_cost.setText(model.getBidCostPerUnit());
-            mEdittext_regyield_crop.setText(model.getYield());
+           mEdittext_regyield_crop.setText(model.getYield());
             spinner_regyield_crop_type.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.crop_type), model.getYieldType()));
             mQty.setText(model.getQTY());
             spinner_regyield_unit.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.unit), model.getQTYType()));
             mEdittext_regyield_duration.setText(model.getDate());
+            mSpinnerBidCostUnit.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.unit), model.getQTYType()));
+            mEdittext_regyield_bid_cost.setText(model.getBidCostPerUnit());
             textview_regyield_lot_no_value.setText(model.getLotnumber());
             mTextview_regyield_place_to_sell_value.setText(model.getPlaceToSell());
-            edittext_regyield_cost.setText(model.getCostPerUnit());
+            mEdittext_regyield_cost.setText(model.getCostPerUnit());
             spinner_regyield_cost.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.unit), model.getCostUnit()));
 
+            //Making gray for indicating as readable------
+            mEdittext_regyield_crop.setTextColor(getResources().getColor(R.color.colorGray));
+            mQty.setTextColor(getResources().getColor(R.color.colorGray));
+            mEdittext_regyield_duration.setTextColor(getResources().getColor(R.color.colorGray));
+            mTextview_regyield_place_to_sell_value.setTextColor(getResources().getColor(R.color.colorGray));
+            mEdittext_regyield_cost.setTextColor(getResources().getColor(R.color.colorGray));
+            mEdittext_regyield_bid_cost.setTextColor(getResources().getColor(R.color.colorGray));
+            //------------------------------------
             switch (model.getFrom()) {
                 case FROM_PROPOSAL:
+                    mEdittext_regyield_bid_cost.setTextColor(getResources().getColor(R.color.colorBlack));
+                    mEdittext_regyield_bid_cost.setFocusable(true);
+                    mFragment_regyield_locate_buyer.setVisibility(View.GONE);
                     dismiss.setVisibility(View.GONE);
                     mButton_regyield_accept.setText("Notify");
                     mButton_regyield_reject.setText("Reject");
+                    mEdittext_regyield_bid_cost.setEnabled(true);
+                    lin_regyield_bid_cost.setVisibility(View.VISIBLE);
                     lin_holder_btn_accept_reject.setVisibility(View.VISIBLE);
                     break;
                 case FROM_NOTIFICATION:
+                    mFragment_regyield_locate_buyer.setVisibility(View.GONE);
                     if (Constant.USER_INFO_LIST.get(0).getTYPE().equalsIgnoreCase(TableUserInfoDataModel.TYPE_USER_BUYER)) {
                         dismiss.setVisibility(View.GONE);
                         lin_holder_btn_accept_reject.setVisibility(View.GONE);
-                        lin_regyield_bid_cost.setVisibility(View.VISIBLE);
-                        mEdittext_regyield_bid_cost.setEnabled(false);
-                        if (model.getBidCostPerUnit() == null) {
-                            mEdittext_regyield_bid_cost.setText("Pending");
+                        if(model.getBidCostPerUnit() != null) {
+                            lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                            mEdittext_regyield_bid_cost.setEnabled(false);
+                        }else {
+                            lin_regyield_bid_cost.setVisibility(View.GONE);
                         }
                     } else {
                         switch (model.getStatusValue()) {
                             case YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER:
                                 lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                                mFragment_regyield_locate_buyer.setVisibility(View.VISIBLE);
                                 mEdittext_regyield_bid_cost.setEnabled(false);
                                 dismiss.setVisibility(View.VISIBLE);
                                 lin_holder_btn_accept_reject.setVisibility(View.GONE);
@@ -198,6 +228,11 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                 case FROM_REG_YIELD:
                     break;
                 case FROM_HISTORY:
+                    mFragment_regyield_locate_buyer.setVisibility(View.GONE);
+                    dismiss.setVisibility(View.GONE);
+                    mEdittext_regyield_bid_cost.setEnabled(false);
+                    lin_regyield_bid_cost.setVisibility(View.VISIBLE);
+                    lin_holder_btn_accept_reject.setVisibility(View.GONE);
                     break;
             }
         }

@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,9 +31,39 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:padding="4dp"
-                android:text="Smart Analysis"
+                android:text="Predict Price"
                 android:textColor="@color/colorBlack" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/commom_padding"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <com.aiml.agwarriors.utils.FontTextView
+                    android:id="@+id/textview_regyield_lot_no_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:padding="4dp"
+                    android:text="Lot No."
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/button_size_medium" />
+
+                <com.aiml.agwarriors.utils.FontTextView
+                    android:id="@+id/textview_regyield_lot_no_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:padding="4dp"
+                    android:text="LOT_YIELD_TYPE_TIME"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/button_size_micro_small" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,7 +94,7 @@
                     android:padding="4dp"
                     android:singleLine="true"
                     android:text="Mango"
-                    android:textColor="@color/colorBlack" />
+                    android:textColor="@color/colorGray" />
             </LinearLayout>
 
             <LinearLayout
@@ -175,36 +206,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/commom_padding"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <com.aiml.agwarriors.utils.FontTextView
-                    android:id="@+id/textview_regyield_lot_no_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.5"
-                    android:padding="4dp"
-                    android:text="Lot No."
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/button_size_medium" />
-
-                <com.aiml.agwarriors.utils.FontTextView
-                    android:id="@+id/textview_regyield_lot_no_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.5"
-                    android:padding="4dp"
-                    android:text="LOT_DATE_NO_ID"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/button_size_medium" />
-
-            </LinearLayout>
 
             <Button
                 android:id="@+id/button_regyield_Analysis"
@@ -332,13 +333,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.3"
                     android:background="@drawable/border_rect"
                     android:inputType="number"
                     android:padding="4dp"
                     android:singleLine="true"
                     android:textColor="@color/colorBlack" />
 
+                <Spinner
+                    android:id="@+id/spinner_regyield_bid_cost_unit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/border_rect"
+                    android:entries="@array/unit"
+                    android:padding="5dp"></Spinner>
             </LinearLayout>
 
             <Button

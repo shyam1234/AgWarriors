@@ -14,6 +14,7 @@ import com.aiml.agwarriors.adapters.NotificationAdapter;
 import com.aiml.agwarriors.constant.Constant;
 import com.aiml.agwarriors.database.TableYield;
 import com.aiml.agwarriors.interfaces.IActivity;
+import com.aiml.agwarriors.model.TableUserInfoDataModel;
 import com.aiml.agwarriors.model.YieldListModel;
 import com.aiml.agwarriors.utils.AppLog;
 import com.aiml.agwarriors.utils.RecyclerTouchListener;
@@ -73,8 +74,8 @@ public class HistoryListActivity extends BaseActivity implements IActivity {
                         Bundle bundle = new Bundle();
                         mHistoryYieldList.get(position).setFrom(YieldListModel.FROM_HISTORY);
                         bundle.putSerializable(Constant.KEY_SEND_BROADCAST, mHistoryYieldList.get(position));
-                        Toast.makeText(HistoryListActivity.this, "Coming Soon", Toast.LENGTH_LONG).show();
-                        //navigateTo(HistoryListActivity.this, ReadYieldDetailActivity.class, bundle, false);
+                        //Toast.makeText(HistoryListActivity.this, "Coming Soon", Toast.LENGTH_LONG).show();
+                        navigateTo(HistoryListActivity.this, ReadYieldDetailActivity.class, bundle, false);
                         break;
                 }
             }
@@ -128,7 +129,11 @@ public class HistoryListActivity extends BaseActivity implements IActivity {
         try {
             TableYield table = new TableYield();
             table.openDB(this);
-            list = table.getHistoryList(pUID);
+            if (Constant.USER_INFO_LIST.get(0).getTYPE().equalsIgnoreCase(TableUserInfoDataModel.TYPE_USER_BUYER)) {
+                list = table.getHistoryListForBuyer(pUID);
+            }else{
+                list = table.getHistoryList(pUID);
+            }
             table.closeDB();
         } catch (Exception e) {
             AppLog.errLog("HistoryListActivity", "getHistoryYieldData: " + e.getMessage());

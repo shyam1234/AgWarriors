@@ -449,6 +449,47 @@ public class TableYield {
             return null;
         }
     }
+    public synchronized ArrayList<YieldListModel> getHistoryListForBuyer(String pUserId) {
+        try {
+            ArrayList<YieldListModel> list = new ArrayList<>();
+            if (mDB != null) {
+                String selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE " + MESSAGE_TO + "='" + pUserId + "' AND ( "
+                        + STATUS_VALUE + "='" + YieldListModel.STATUS_ACCEPT_PROPOSAL + "' OR "
+                        + STATUS_VALUE + "='" + YieldListModel.STATUS_REJECT_PROPOSAL + "' )";
+                Cursor cursor = mDB.rawQuery(selectQuery, null);
+                if (cursor.moveToFirst()) {
+                    do {
+
+                        // get the data into array, or class variable
+                        YieldListModel model = new YieldListModel();
+                        model.setLotnumber(cursor.getString(cursor.getColumnIndex(LOTID)));
+                        model.setUserID(cursor.getString(cursor.getColumnIndex(USER_ID)));
+                        model.setMessageTo(cursor.getString(cursor.getColumnIndex(MESSAGE_TO)));
+                        model.setMessageFrom(cursor.getString(cursor.getColumnIndex(MESSAGE_FROM)));
+                        model.setYield((cursor.getString(cursor.getColumnIndex(YIELD))));
+                        model.setYieldType((cursor.getString(cursor.getColumnIndex(YIELD_TYPE))));
+                        model.setQTY((cursor.getString(cursor.getColumnIndex(QTY))));
+                        model.setDate((cursor.getString(cursor.getColumnIndex(DATE))));
+                        model.setPlaceToSell((cursor.getString(cursor.getColumnIndex(PLACE_TO_SELL))));
+                        model.setBidCostPerUnit((cursor.getString(cursor.getColumnIndex(BID_COST_PER_UNIT))));
+                        model.setCostUnit((cursor.getString(cursor.getColumnIndex(COST_UNIT))));
+                        model.setStatus((cursor.getString(cursor.getColumnIndex(STATUS))));
+                        model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
+                        model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
+                        model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        list.add(model);
+                    } while (cursor.moveToNext());
+                }
+                cursor.close();
+            } else {
+                Toast.makeText(MyApplication.getInstance().getApplicationContext(), "Need to open DB", Toast.LENGTH_SHORT).show();
+            }
+            return list;
+        } catch (Exception e) {
+            AppLog.errLog(TAG, "Exception from getHistoryList() " + e.getMessage());
+            return null;
+        }
+    }
 
     public synchronized YieldListModel getYieldInfoBasedOnLotID(String pLotId, String pUserID) {
         try {
