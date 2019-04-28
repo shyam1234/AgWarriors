@@ -218,12 +218,23 @@
                 android:textSize="@dimen/button_size_medium" />
 
             <fragment
+                android:visibility="gone"
                 android:id="@+id/fragment_regyield_locate_buyer"
                 class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_below="@+id/radiogroup_signup_holder"
                 android:layout_marginTop="10dp" />
+
+            <ImageView
+                android:id="@+id/imageview_map"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_below="@+id/radiogroup_signup_holder"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/mango_shop"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"

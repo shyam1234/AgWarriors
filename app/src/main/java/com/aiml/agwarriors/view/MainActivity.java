@@ -49,13 +49,11 @@ public class MainActivity extends BaseActivity implements IActivity {
         init();
         switch (Constant.USER_INFO_LIST.get(0).getTYPE()) {
             case Constant.USER_FARMER:
-                setTheme(R.style.AppThemeFarmer);
                 mListNotification = getNotification(Constant.USER_INFO_LIST.get(0).getID());
                 mListYieldBroadCast = getBroadcastForSeller(Constant.USER_INFO_LIST.get(0).getID());
                 initListForFarmer();
                 break;
             case Constant.USER_BUYER:
-                setTheme(R.style.AppThemeBuyer);
                 mListNotification = getNotificationForBuyerFromDB(Constant.USER_INFO_LIST.get(0).getID());
                 mListYieldBroadCast = getBoradcastListForBuyer(Constant.USER_INFO_LIST.get(0).getID());
                 initListForBuyer();

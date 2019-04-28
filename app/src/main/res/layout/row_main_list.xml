@@ -9,7 +9,7 @@
         android:id="@+id/textview_row_main_item"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/colorBlue"
+        android:background="@color/colorBlueList"
         android:gravity="center"
         android:text="Test"
         android:textColor="@color/colorWhite"

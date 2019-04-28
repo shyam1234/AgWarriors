@@ -108,6 +108,10 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
     @Override
     public void initView() {
         initHeader();
+        View fragment = findViewById(R.id.fragment_regyield_locate_buyer);
+        ImageView map = (ImageView) findViewById(R.id.imageview_map);
+        map.setVisibility(View.VISIBLE);
+        fragment.setVisibility(View.GONE);
         mEdittext_regyield_crop = (EditText) findViewById(R.id.edittext_regyield_crop);
         Button button_regyield_smartanalysis = (Button) findViewById(R.id.button_regyield_smartanalysis);
         button_regyield_smartanalysis.setOnClickListener(this);

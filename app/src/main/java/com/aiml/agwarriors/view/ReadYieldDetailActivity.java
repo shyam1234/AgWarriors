@@ -48,6 +48,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
     private Spinner mSpinnerBidCostUnit;
     private View mFragment_regyield_locate_buyer;
     private EditText mEdittext_regyield_cost;
+    private ImageView mImageview_map;
     //private ArrayList<YieldListModel> mFarmerInfo;
 
     @Override
@@ -145,7 +146,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         mSpinnerBidCostUnit = (Spinner) findViewById(R.id.spinner_regyield_bid_cost_unit);
         mSpinnerBidCostUnit.setEnabled(false);
         mFragment_regyield_locate_buyer =  findViewById(R.id.fragment_regyield_locate_buyer);
-
+        mImageview_map = (ImageView)findViewById(R.id.imageview_map);
         if (model != null) {
            mEdittext_regyield_crop.setText(model.getYield());
             spinner_regyield_crop_type.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.crop_type), model.getYieldType()));
@@ -172,6 +173,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                     mEdittext_regyield_bid_cost.setTextColor(getResources().getColor(R.color.colorBlack));
                     mEdittext_regyield_bid_cost.setFocusable(true);
                     mFragment_regyield_locate_buyer.setVisibility(View.GONE);
+                    mImageview_map.setVisibility(View.GONE);
                     dismiss.setVisibility(View.GONE);
                     mButton_regyield_accept.setText("Notify");
                     mButton_regyield_reject.setText("Reject");
@@ -181,7 +183,9 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                     break;
                 case FROM_NOTIFICATION:
                     mFragment_regyield_locate_buyer.setVisibility(View.GONE);
+                    mImageview_map.setVisibility(View.GONE);
                     if (Constant.USER_INFO_LIST.get(0).getTYPE().equalsIgnoreCase(TableUserInfoDataModel.TYPE_USER_BUYER)) {
+                        //For Buyer
                         dismiss.setVisibility(View.GONE);
                         lin_holder_btn_accept_reject.setVisibility(View.GONE);
                         if(model.getBidCostPerUnit() != null) {
@@ -191,10 +195,12 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                             lin_regyield_bid_cost.setVisibility(View.GONE);
                         }
                     } else {
+                        //For Farmer
                         switch (model.getStatusValue()) {
                             case YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER:
                                 lin_regyield_bid_cost.setVisibility(View.VISIBLE);
-                                mFragment_regyield_locate_buyer.setVisibility(View.VISIBLE);
+                                mFragment_regyield_locate_buyer.setVisibility(View.GONE);
+                                mImageview_map.setVisibility(View.VISIBLE);
                                 mEdittext_regyield_bid_cost.setEnabled(false);
                                 dismiss.setVisibility(View.VISIBLE);
                                 lin_holder_btn_accept_reject.setVisibility(View.GONE);
@@ -226,9 +232,12 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                     }
                     break;
                 case FROM_REG_YIELD:
+                    mFragment_regyield_locate_buyer.setVisibility(View.GONE);
+                    mImageview_map.setVisibility(View.VISIBLE);
                     break;
                 case FROM_HISTORY:
                     mFragment_regyield_locate_buyer.setVisibility(View.GONE);
+                    mImageview_map.setVisibility(View.GONE);
                     dismiss.setVisibility(View.GONE);
                     mEdittext_regyield_bid_cost.setEnabled(false);
                     lin_regyield_bid_cost.setVisibility(View.VISIBLE);
