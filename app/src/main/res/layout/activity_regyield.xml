@@ -25,15 +25,6 @@
             android:orientation="vertical"
             android:padding="@dimen/commom_padding">
 
-            <Button
-                android:id="@+id/button_regyield_smartanalysis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:padding="4dp"
-                android:text="Predict Price"
-                android:textColor="@color/colorBlack" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -206,6 +197,23 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/button_regyield_smartanalysis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="4dp"
+                android:text="Predict Price"
+                android:textColor="@color/colorBlack" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barchart_cost"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_below="@+id/radiogroup_signup_holder"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/button_regyield_Analysis"
@@ -218,20 +226,20 @@
                 android:textSize="@dimen/button_size_medium" />
 
             <fragment
-                android:visibility="gone"
                 android:id="@+id/fragment_regyield_locate_buyer"
                 class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_below="@+id/radiogroup_signup_holder"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/imageview_map"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:layout_below="@+id/radiogroup_signup_holder"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/mango_shop"
                 android:visibility="visible" />

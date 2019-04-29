@@ -20,20 +20,34 @@ import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.constant.Constant;
 import com.aiml.agwarriors.database.TableYield;
 import com.aiml.agwarriors.interfaces.IActivity;
+import com.aiml.agwarriors.model.CostMLResponseDataModel;
 import com.aiml.agwarriors.model.YieldListModel;
+import com.aiml.agwarriors.restfulManager.WebApplication;
 import com.aiml.agwarriors.utils.AppLog;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.squareup.okhttp.Request;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
 
 public class RegisterYieldActivity extends BaseActivity implements IActivity, AdapterView.OnItemSelectedListener {
     private final int AUTOCOMPLETE_REQUEST_CODE = 1;
@@ -54,6 +68,9 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
     private Button mButton_regyield_Analysis;
     private EditText mEdittext_regyield_cost;
     private Spinner mSpinner_regyield_cost;
+    private ImageView map;
+    private List<CostMLResponseDataModel> mPredictedCostList;
+    private BarChart mBarchart_cost;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -109,8 +126,8 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
     public void initView() {
         initHeader();
         View fragment = findViewById(R.id.fragment_regyield_locate_buyer);
-        ImageView map = (ImageView) findViewById(R.id.imageview_map);
-        map.setVisibility(View.VISIBLE);
+        map = (ImageView) findViewById(R.id.imageview_map);
+        map.setVisibility(View.GONE);
         fragment.setVisibility(View.GONE);
         mEdittext_regyield_crop = (EditText) findViewById(R.id.edittext_regyield_crop);
         Button button_regyield_smartanalysis = (Button) findViewById(R.id.button_regyield_smartanalysis);
@@ -130,6 +147,8 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         mSpinner_regyield_cost = (Spinner) findViewById(R.id.spinner_regyield_cost);
         mBtn_broadcast = (Button) findViewById(R.id.button_regyield_freeze);
         mBtn_broadcast.setOnClickListener(this);
+        mBarchart_cost = (BarChart)findViewById(R.id.barchart_cost);
+        mBarchart_cost.setVisibility(View.GONE);
 
         mEdittext_regyield_duration.addTextChangedListener(new TextWatcher() {
             @Override
@@ -187,18 +206,61 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
                 showCalender();
                 break;
             case R.id.button_regyield_freeze:
-                Toast.makeText(RegisterYieldActivity.this, "Successfully sent broadcast to buyers ",Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterYieldActivity.this, "Successfully sent broadcast to buyers ", Toast.LENGTH_LONG).show();
                 addDataIntoList();
                 finish();
                 break;
             case R.id.button_regyield_smartanalysis:
-                Toast.makeText(RegisterYieldActivity.this, "Coming soon",Toast.LENGTH_LONG).show();
+                mBarchart_cost.setVisibility(View.VISIBLE);
+                fetchCost();
                 break;
             case R.id.button_regyield_Analysis:
-                Toast.makeText(RegisterYieldActivity.this, "Coming soon",Toast.LENGTH_LONG).show();
+                map.setVisibility(View.VISIBLE);
+                //Toast.makeText(RegisterYieldActivity.this, "Coming soon",Toast.LENGTH_LONG).show();
                 break;
         }
     }
+
+    private void fetchCost() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("ProductType", "Mango Raw");
+            jsonObject.put("Area", "Bangalore city Market");
+            jsonObject.put("DateToPredict", "05/10/2019");
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(jsonObject);
+            WebApplication.getInstance().getPostResponse(Constant.URL_COST, jsonArray.toString(), new WebApplication.IWebApp() {
+                @Override
+                public void onResponse(String response) {
+                    if (response != null) {
+                        mPredictedCostList = parseResponse(response);
+                        addMPBarChart();
+                    }
+                }
+
+                @Override
+                public void onFailure(Request request, IOException e) {
+                     Toast.makeText(RegisterYieldActivity.this, "Failed to fetch data", Toast.LENGTH_LONG).show();
+                }
+            });
+        } catch (Exception e) {
+        }
+    }
+
+    private void addMPBarChart() {
+        int index = 0 ;
+        ArrayList<String> listDate = new ArrayList<String>();
+        ArrayList<BarEntry> listCost = new ArrayList<BarEntry>();
+        for(CostMLResponseDataModel holder: mPredictedCostList){
+            listDate.add(holder.getDate());
+            listCost.add(new BarEntry(holder.getPrice(), index++));
+        }
+        BarDataSet BardatasetCost = new BarDataSet(listCost, "Cost");
+        BarData BARDATA = new BarData(listDate,BardatasetCost);
+        BardatasetCost.setColors(ColorTemplate.COLORFUL_COLORS);
+        mBarchart_cost.setData(BARDATA);
+    }
+
 
     private void addDataIntoList() {
         mModel.setBidCostPerUnit(null);
@@ -215,8 +277,8 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         mModel.setPlaceToSell(mTextview_regyield_place_to_sell_value.getText().toString());
         mModel.setStatus("Sent Broadcast");
         mModel.setStatusValue(YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER);
-        mTextview_regyield_lot_no_value.setText("LOT"+"_"+mModel.getYield()+"_"+mModel.getYieldType()+"_"+System.currentTimeMillis());
-        mModel.setLotnumber(mTextview_regyield_lot_no_value.getText().toString().replace("/",""));
+        mTextview_regyield_lot_no_value.setText("LOT" + "_" + mModel.getYield() + "_" + mModel.getYieldType() + "_" + System.currentTimeMillis());
+        mModel.setLotnumber(mTextview_regyield_lot_no_value.getText().toString().replace("/", ""));
         saveToYieldDB(mModel);
     }
 
@@ -258,24 +320,51 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-         switch (adapterView.getId()){
-             case R.id.spinner_regyield_crop_type:
-                 break;
-             case R.id.spinner_regyield_unit:
-                 if(mSpinner_regyield_cost.getSelectedItemPosition() != i) {
-                     mSpinner_regyield_cost.setSelection(i);
-                 }
-                 break;
-             case R.id.spinner_regyield_cost:
-                 if(mSpinner_regyield_unit.getSelectedItemPosition() != i) {
-                     mSpinner_regyield_unit.setSelection(i);
-                 }
-                 break;
-         }
+        switch (adapterView.getId()) {
+            case R.id.spinner_regyield_crop_type:
+                break;
+            case R.id.spinner_regyield_unit:
+                if (mSpinner_regyield_cost.getSelectedItemPosition() != i) {
+                    mSpinner_regyield_cost.setSelection(i);
+                }
+                break;
+            case R.id.spinner_regyield_cost:
+                if (mSpinner_regyield_unit.getSelectedItemPosition() != i) {
+                    mSpinner_regyield_unit.setSelection(i);
+                }
+                break;
+        }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    /**
+     * [ { "Date" : "05/10/19" , "price" : 3934 },
+     * { "Date" : "05/15/19" , "price" : 4324 }  ]
+     *
+     * @param pResp
+     */
+    private List<CostMLResponseDataModel> parseResponse(String pResp) {
+        List<CostMLResponseDataModel> list = new ArrayList<CostMLResponseDataModel>();
+        try {
+            JSONArray jsonArray = new JSONArray(pResp);
+            if (jsonArray != null) {
+                for (int index = 0; index < jsonArray.length(); index++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(index);
+                    if (jsonObject != null) {
+                        CostMLResponseDataModel holder = new CostMLResponseDataModel();
+                        holder.setDate(jsonObject.getString("Date"));
+                        holder.setPrice(jsonObject.getString("price"));
+                        list.add(holder);
+                    }
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            return list;
+        }
     }
 }
