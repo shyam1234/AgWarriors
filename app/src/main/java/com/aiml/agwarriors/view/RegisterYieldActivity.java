@@ -226,15 +226,21 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("ProductType", "Mango Raw");
             jsonObject.put("Area", "Bangalore city Market");
-            jsonObject.put("DateToPredict", "05/10/2019");
+            jsonObject.put("DateToPredict", mEdittext_regyield_duration.getText().toString());
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(jsonObject);
             WebApplication.getInstance().getPostResponse(Constant.URL_COST, jsonArray.toString(), new WebApplication.IWebApp() {
                 @Override
-                public void onResponse(String response) {
+                public void onResponse(final String response) {
                     if (response != null) {
-                        mPredictedCostList = parseResponse(response);
-                        addMPBarChart();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPredictedCostList = parseResponse(response);
+                                addMPBarChart();
+                            }
+                        });
+
                     }
                 }
 
