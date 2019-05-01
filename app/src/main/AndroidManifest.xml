@@ -74,6 +74,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
+        <activity
+            android:name=".view.ActiveBidListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

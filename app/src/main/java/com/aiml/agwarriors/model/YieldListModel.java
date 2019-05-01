@@ -7,6 +7,7 @@ public class YieldListModel implements Serializable {
     public static final int FROM_REG_YIELD = 2;
     public static final int FROM_HISTORY = 3;
     public static final int FROM_PROPOSAL = 4;
+    public static final int FROM_ACTIVE_BID = 5;
 
     public static final int STATUS_SENT_BRAODCAST_TO_BUYER = 1;
     public static final int STATUS_ACCEPT_PROPOSAL = 2;

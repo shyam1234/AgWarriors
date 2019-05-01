@@ -55,7 +55,7 @@ public class HistoryListActivity extends BaseActivity implements IActivity {
         TextView title = (TextView) findViewById(R.id.textview_title);
         back.setOnClickListener(this);
         back.setVisibility(View.VISIBLE);
-        title.setText("History Yield Transaction");
+        title.setText("History");
     }
 
     private void initRecyclerView() {

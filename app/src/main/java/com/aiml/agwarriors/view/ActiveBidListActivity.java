@@ -20,12 +20,12 @@ import com.aiml.agwarriors.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 
-public class BuyerProposalActivity extends BaseActivity implements IActivity {
+public class ActiveBidListActivity extends BaseActivity implements IActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<YieldListModel> mNotificationList;
+    private ArrayList<YieldListModel> mActiveBidList;
 
 
     @Override
@@ -39,7 +39,8 @@ public class BuyerProposalActivity extends BaseActivity implements IActivity {
 
     @Override
     public void init() {
-        mNotificationList = getProposalForBuyer(Constant.USER_INFO_LIST.get(0).getID());
+        //mActiveBidList = getHistoryYieldData(Constant.USER_INFO_LIST.get(0).getID());
+        mActiveBidList = getActiveBidData(Constant.USER_INFO_LIST.get(0).getID());
     }
 
 
@@ -54,7 +55,7 @@ public class BuyerProposalActivity extends BaseActivity implements IActivity {
         TextView title = (TextView) findViewById(R.id.textview_title);
         back.setOnClickListener(this);
         back.setVisibility(View.VISIBLE);
-        title.setText("Bid");
+        title.setText("Active Bid");
     }
 
     private void initRecyclerView() {
@@ -62,7 +63,7 @@ public class BuyerProposalActivity extends BaseActivity implements IActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new NotificationAdapter(mNotificationList);
+        mAdapter = new NotificationAdapter(mActiveBidList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
                 mRecyclerView, new RecyclerTouchListener.ClickListener() {
@@ -70,11 +71,10 @@ public class BuyerProposalActivity extends BaseActivity implements IActivity {
             public void onClick(View view, final int position) {
                 switch (view.getId()) {
                     case R.id.lin_row_list_yield:
-                      //  Toast.makeText(NotificationActivity.this, "position: " + position, Toast.LENGTH_SHORT).show();
                         Bundle bundle = new Bundle();
-                        mNotificationList.get(position).setFrom(YieldListModel.FROM_PROPOSAL);
-                        bundle.putSerializable(Constant.KEY_SEND_BROADCAST, mNotificationList.get(position));
-                        navigateTo(BuyerProposalActivity.this, ReadYieldDetailActivity.class, bundle, false);
+                        mActiveBidList.get(position).setFrom(YieldListModel.FROM_ACTIVE_BID);
+                        bundle.putSerializable(Constant.KEY_SEND_BROADCAST, mActiveBidList.get(position));
+                        navigateTo(ActiveBidListActivity.this, ReadYieldDetailActivity.class, bundle, false);
                         break;
                 }
             }
@@ -94,9 +94,9 @@ public class BuyerProposalActivity extends BaseActivity implements IActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mNotificationList = getProposalForBuyer(Constant.USER_INFO_LIST.get(0).getID());
-        if (mNotificationList.size() == 0) {
-            Toast.makeText(BuyerProposalActivity.this,"Notification not found",Toast.LENGTH_LONG).show();
+        mActiveBidList = getActiveBidData(Constant.USER_INFO_LIST.get(0).getID());
+        if (mActiveBidList.size() == 0) {
+            Toast.makeText(ActiveBidListActivity.this, "Active bid not found", Toast.LENGTH_LONG).show();
             finish();
         }
         if (mAdapter != null) {
@@ -123,17 +123,19 @@ public class BuyerProposalActivity extends BaseActivity implements IActivity {
         super.onClick(view);
     }
 
-    private ArrayList<YieldListModel> getProposalForBuyer(String pUID) {
+    private ArrayList<YieldListModel> getActiveBidData(String pUID) {
         ArrayList<YieldListModel> list = new ArrayList<>();
         try {
             TableYield table = new TableYield();
             table.openDB(this);
-            list = table.getProposalForBuyer(pUID);
+            list = table.getActiveBidForBuyer(pUID);
             table.closeDB();
         } catch (Exception e) {
-            AppLog.errLog("NotificationActivity", "getProposalForBuyer: " + e.getMessage());
+            AppLog.errLog("ActiveBidListActivity", "getActiveBidData: " + e.getMessage());
         } finally {
             return list;
         }
     }
+
+
 }

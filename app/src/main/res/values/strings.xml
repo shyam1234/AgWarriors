@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">AgWarrior</string>
-
     <string-array name="unit">
         <item>Unit</item>
         <item>Kg</item>
-        <item>Grams</item>
+        <item>Quintal</item>
     </string-array>
 
     <string-array name="crop_type">

@@ -28,6 +28,7 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 
 import java.util.ArrayList;
 
+import static com.aiml.agwarriors.model.YieldListModel.FROM_ACTIVE_BID;
 import static com.aiml.agwarriors.model.YieldListModel.FROM_HISTORY;
 import static com.aiml.agwarriors.model.YieldListModel.FROM_NOTIFICATION;
 import static com.aiml.agwarriors.model.YieldListModel.FROM_PROPOSAL;
@@ -83,16 +84,19 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         if (model != null) {
             switch (model.getFrom()) {
                 case FROM_PROPOSAL:
-                    title.setText("Proposal Details");
+                    title.setText("Bid");
+                    break;
+                case FROM_ACTIVE_BID:
+                    title.setText("Active Bid");
                     break;
                 case FROM_HISTORY:
-                    title.setText("History Details");
+                    title.setText("History");
                     break;
                 case FROM_NOTIFICATION:
                     title.setText("Notification Details");
                     break;
                 case FROM_REG_YIELD:
-                    title.setText("Yield Registration Details");
+                    title.setText("Lot Detail");
                     break;
             }
         }
@@ -236,6 +240,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                     mImageview_map.setVisibility(View.VISIBLE);
                     break;
                 case FROM_HISTORY:
+                case FROM_ACTIVE_BID:
                     mFragment_regyield_locate_buyer.setVisibility(View.GONE);
                     mImageview_map.setVisibility(View.GONE);
                     dismiss.setVisibility(View.GONE);

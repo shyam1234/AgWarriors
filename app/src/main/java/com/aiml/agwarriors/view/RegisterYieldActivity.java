@@ -119,7 +119,7 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         ImageView notification = (ImageView) findViewById(R.id.imageview_header_notification);
         back.setOnClickListener(this);
         back.setVisibility(View.VISIBLE);
-        title.setText("Register Yield");
+        title.setText("Record Yield");
     }
 
     @Override

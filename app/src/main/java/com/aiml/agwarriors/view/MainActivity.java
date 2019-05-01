@@ -27,11 +27,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements IActivity {
 
-    private final String YIELD = "Yield";
-    private final String NOTIFICATION = "Notification";
+    private final String YIELD = "Record Yield";
+    private final String BID = "Bid";
     private final String HISTORY = "History";
     private final String GENERAL_INFO = "General Information";
     private final String ANALYTICS = "Analytics";
+    private final String ACTIVE_BID = "Active Bid";
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -76,7 +77,8 @@ public class MainActivity extends BaseActivity implements IActivity {
     }
 
     private void initListForBuyer() {
-        mList.add(new MainScreenModel(NOTIFICATION));
+        mList.add(new MainScreenModel(BID));
+        mList.add(new MainScreenModel(ACTIVE_BID));
         mList.add(new MainScreenModel(HISTORY));
         mList.add(new MainScreenModel(ANALYTICS));
     }
@@ -132,8 +134,11 @@ public class MainActivity extends BaseActivity implements IActivity {
                     case ANALYTICS:
                         Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
-                    case NOTIFICATION:
+                    case BID:
                         navigateTo(MainActivity.this, BuyerProposalActivity.class, false);
+                        break;
+                    case ACTIVE_BID:
+                        navigateTo(MainActivity.this, ActiveBidListActivity.class, false);
                         break;
                 }
             }
