@@ -36,6 +36,8 @@ public class SignupActivity extends BaseActivity implements IActivity {
     private EditText mEdititext_signup_confirmation_password;
     private EditText mEdititext_signup_phone_number;
     private RadioGroup mRadiogroup_signup_holder;
+    private Button mButton_locate_me;
+    private ImageView mImageview_map;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -54,13 +56,17 @@ public class SignupActivity extends BaseActivity implements IActivity {
     @Override
     public void initView() {
         initHeader();
+        mButton_locate_me = (Button)findViewById(R.id.button_locate_me);
         mEdititext_signup_username = (EditText) findViewById(R.id.edititext_signup_username);
         mEdititext_signup_password = (EditText) findViewById(R.id.edititext_signup_password);
         mEdititext_signup_confirmation_password = (EditText) findViewById(R.id.edititext_signup_confirmation_password);
         mEdititext_signup_phone_number = (EditText) findViewById(R.id.edititext_signup_phone_number);
         mRadiogroup_signup_holder = (RadioGroup) findViewById(R.id.radiogroup_signup_holder);
+        mImageview_map = (ImageView) findViewById(R.id.imageview_map);
+        mImageview_map.setVisibility(View.GONE);
         mButton_signup_sign_up = findViewById(R.id.button_signup_sign_up);
         mButton_signup_sign_up.setOnClickListener(this);
+        mButton_locate_me.setOnClickListener(this);
     }
 
     private void initHeader() {
@@ -92,6 +98,9 @@ public class SignupActivity extends BaseActivity implements IActivity {
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
+            case R.id.button_locate_me:
+                mImageview_map.setVisibility(View.VISIBLE);
+                break;
             case R.id.button_signup_sign_up:
                 TableUserInfoDataModel model = new TableUserInfoDataModel();
                 model.setUSERNAME(mEdititext_signup_username.getText().toString());
