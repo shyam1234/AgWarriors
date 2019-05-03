@@ -11,6 +11,7 @@
     <color name="colorRed">#CC3410</color>
     <color name="colorBlueList">#B7CC3410</color>
     <color name="colorBlack">#000000</color>
+ <color name="colorGreen">#347537</color>
  <color name="colorWhite">#ffffff</color>
  <color name="colorGray">#99676969</color>
 </resources>

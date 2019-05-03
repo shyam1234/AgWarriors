@@ -1,9 +1,5 @@
 package com.aiml.agwarriors.view;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,13 +15,7 @@ import com.aiml.agwarriors.database.TableUserInfo;
 import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.TableUserInfoDataModel;
 import com.aiml.agwarriors.utils.AppLog;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class SignupActivity extends BaseActivity implements IActivity {
     private Button mButton_signup_sign_up;
@@ -50,7 +40,7 @@ public class SignupActivity extends BaseActivity implements IActivity {
     @Override
     public void init() {
 //        getSupportActionBar().hide();
-        setUpMapIfNeeded();
+       // setUpMapIfNeeded();
     }
 
     @Override
@@ -122,7 +112,7 @@ public class SignupActivity extends BaseActivity implements IActivity {
 
 
     private void setUpMapIfNeeded() {
-        if (mMap == null) {
+        /*if (mMap == null) {
             ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_signup_locate_me)).getMapAsync(new OnMapReadyCallback() {
 
                 @Override
@@ -159,7 +149,7 @@ public class SignupActivity extends BaseActivity implements IActivity {
 
             });
 
-        }
+        }*/
     }
 
     private void saveSignupData(TableUserInfoDataModel pModel) {

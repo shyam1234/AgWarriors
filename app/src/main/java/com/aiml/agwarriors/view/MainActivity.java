@@ -1,9 +1,13 @@
 package com.aiml.agwarriors.view;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,26 +46,8 @@ public class MainActivity extends BaseActivity implements IActivity {
     private TextView mTextview_header_notification_count;
     private ArrayList<YieldListModel> mListNotification;
     private ArrayList<YieldListModel> mListYieldBroadCast;
-
-    @Override
-    public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
-        setContentView(R.layout.activity_main);
-        init();
-        switch (Constant.USER_INFO_LIST.get(0).getTYPE()) {
-            case Constant.USER_FARMER:
-                mListNotification = getNotification(Constant.USER_INFO_LIST.get(0).getID());
-                mListYieldBroadCast = getBroadcastForSeller(Constant.USER_INFO_LIST.get(0).getID());
-                initListForFarmer();
-                break;
-            case Constant.USER_BUYER:
-                mListNotification = getNotificationForBuyerFromDB(Constant.USER_INFO_LIST.get(0).getID());
-                mListYieldBroadCast = getBoradcastListForBuyer(Constant.USER_INFO_LIST.get(0).getID());
-                initListForBuyer();
-                break;
-        }
-        initView();
-    }
+    private static final String HTTPS = "https://";
+    private static final String HTTP = "http://";
 
     @Override
     public void init() {
@@ -95,13 +81,38 @@ public class MainActivity extends BaseActivity implements IActivity {
         back.setOnClickListener(this);
         mNotification_holder.setOnClickListener(this);
     }
+    private Button mBtnChatBot;
+
+    @Override
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        setContentView(R.layout.activity_main);
+        init();
+        mBtnChatBot = (Button) findViewById(R.id.btn_main_agrebot);
+        mBtnChatBot.setOnClickListener(this);
+        switch (Constant.USER_INFO_LIST.get(0).getTYPE()) {
+            case Constant.USER_FARMER:
+                mListNotification = getNotification(Constant.USER_INFO_LIST.get(0).getID());
+                mListYieldBroadCast = getBroadcastForSeller(Constant.USER_INFO_LIST.get(0).getID());
+                initListForFarmer();
+                mBtnChatBot.setVisibility(View.VISIBLE);
+                break;
+            case Constant.USER_BUYER:
+                mListNotification = getNotificationForBuyerFromDB(Constant.USER_INFO_LIST.get(0).getID());
+                mListYieldBroadCast = getBoradcastListForBuyer(Constant.USER_INFO_LIST.get(0).getID());
+                initListForBuyer();
+                mBtnChatBot.setVisibility(View.GONE);
+                break;
+        }
+        initView();
+    }
 
     @Override
     public void initView() {
         initHeader();
         initRecyclerView();
-    }
 
+    }
 
     private void initRecyclerView() {
         recyclerView = findViewById(R.id.recyclerview_main_holder);
@@ -140,6 +151,7 @@ public class MainActivity extends BaseActivity implements IActivity {
                     case ACTIVE_BID:
                         navigateTo(MainActivity.this, ActiveBidListActivity.class, false);
                         break;
+
                 }
             }
 
@@ -149,6 +161,14 @@ public class MainActivity extends BaseActivity implements IActivity {
                 //    Toast.LENGTH_LONG).show();
             }
         }));
+    }
+
+    private void openBrowser(Context pContext, String url) {
+        if (!url.startsWith(HTTP) && !url.startsWith(HTTPS)) {
+            url = HTTP + url;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        pContext.startActivity(Intent.createChooser(intent, "Choose browser"));// Choose browser is arbitrary :)
     }
 
     @Override
@@ -285,4 +305,14 @@ public class MainActivity extends BaseActivity implements IActivity {
         }
     }
 
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()){
+            case R.id.btn_main_agrebot:
+                openBrowser(MainActivity.this, Constant.URL_AGREBOT);
+                break;
+        }
+    }
 }
