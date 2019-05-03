@@ -249,8 +249,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.5"
                     android:background="@drawable/border_rect"
-                    android:gravity="center"
-                    android:hint="Click to search place"
+                    android:gravity="left"
+                    android:text="Bengaluru"
                     android:padding="4dp"
                     android:singleLine="true"
                     android:textColor="@color/colorBlack" />
