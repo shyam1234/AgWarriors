@@ -335,7 +335,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.5"
                     android:padding="4dp"
-                    android:text="price/unit"
+                    android:text="Price/unit"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/button_size_medium" />
 
@@ -378,7 +378,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.5"
                     android:padding="4dp"
-                    android:text="Bid price/unit"
+                    android:text="Bid Price/unit"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/button_size_medium" />
 

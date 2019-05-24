@@ -293,7 +293,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                 case R.id.button_regyield_reject:
                     model.setStatusValue(YieldListModel.STATUS_DISMISS_BY_BUYER);
                     model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
-                    model.setStatus("Rejected By " + model.getMessageFrom());
+                    model.setStatus("Rejected "/*By " + model.getMessageFrom()*/);
                     model.setMessageTo(model.getUserID());
                     updateYieldDB(model);
                     Toast.makeText(ReadYieldDetailActivity.this, "Rejected Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
@@ -302,7 +302,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                 case R.id.button_regyield_accept:
                     model.setStatusValue(YieldListModel.STATUS_NOTIFY_TO_SELLER);
                     model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
-                    model.setStatus("Notified By " + model.getMessageFrom());
+                    model.setStatus("Notified By Verified Buyer" /*+ model.getMessageFrom()*/);
                     model.setMessageTo(model.getUserID());
                     updateYieldDB(model);
                     Toast.makeText(ReadYieldDetailActivity.this, "Accepted Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
@@ -316,7 +316,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                 case R.id.button_regyield_reject:
                     model.setStatusValue(YieldListModel.STATUS_REJECT_PROPOSAL);
                     model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
-                    model.setStatus("Rejected By " + model.getMessageFrom());
+                    model.setStatus("Rejected "/*By " + model.getMessageFrom()*/);
                     updateYieldDB(model);
                     Toast.makeText(ReadYieldDetailActivity.this, "Rejected Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
                     finish();
@@ -324,7 +324,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                 case R.id.button_regyield_accept:
                     model.setStatusValue(YieldListModel.STATUS_ACCEPT_PROPOSAL);
                     model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
-                    model.setStatus("Accepted By " + model.getMessageFrom());
+                    model.setStatus("Accepted By Verified Former" /*+ model.getMessageFrom()*/);
                     updateYieldDB(model);
                     Toast.makeText(ReadYieldDetailActivity.this, "Accepted Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
                     finish();
@@ -332,7 +332,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                 case R.id.button_regyield_dismiss:
                     model.setStatusValue(YieldListModel.STATUS_DISMISS_BY_SELLER);
                     model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
-                    model.setStatus("Dismissed By " + model.getMessageFrom());
+                    model.setStatus("Dismissed "/*By " + model.getMessageFrom()*/);
                     updateYieldDB(model);
                     Toast.makeText(ReadYieldDetailActivity.this, "Successfully dismissed By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
                     finish();

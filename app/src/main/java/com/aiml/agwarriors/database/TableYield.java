@@ -454,6 +454,9 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
+
                         list.add(model);
                     } while (cursor.moveToNext());
                 }
@@ -495,6 +498,8 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
                         list.add(model);
                     } while (cursor.moveToNext());
                 }

@@ -31,7 +31,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -67,7 +66,7 @@ public class SignupActivity extends BaseActivity implements IActivity, OnMapRead
     @Override
     public void init() {
 //        getSupportActionBar().hide();
-        setUpMapIfNeeded();
+//        setUpMapIfNeeded();
     }
 
     @Override
@@ -137,9 +136,9 @@ public class SignupActivity extends BaseActivity implements IActivity, OnMapRead
 
 
     private void setUpMapIfNeeded() {
-        if (mMap == null) {
-            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
-        }
+//        if (mMap == null) {
+//            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
+//        }
     }
 
 
