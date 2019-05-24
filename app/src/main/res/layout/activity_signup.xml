@@ -101,11 +101,11 @@
                 android:weightSum="2">
 
                 <RadioButton
-                    android:checked="true"
                     android:id="@+id/radiobtn_signup_farmer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:text="Farmer" />
 
                 <RadioButton
@@ -133,7 +133,8 @@
                 android:layout_marginTop="20dp"
                 android:text="Locate Me"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/button_size_medium" />
+                android:textSize="@dimen/button_size_medium"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/imageview_map"
@@ -145,25 +146,20 @@
                 android:src="@drawable/curr_loc"
                 android:visibility="gone" />
 
-            <!-- <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
-                 xmlns:map="http://schemas.android.com/apk/res-auto"
-                 android:id="@+id/mapView"
-                 android:layout_width="match_parent"
-                 android:layout_height="200dp"
-                 android:layout_below="@+id/radiogroup_signup_holder"
-                 android:layout_marginTop="20dp"
-                 android:background="#00000000"
-                 android:clickable="true"
-                 map:uiCompass="true"
-                 map:uiZoomControls="true"
-                 map:zOrderOnTop="true" />-->
-
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@+id/radiogroup_signup_holder"
+                tools:context="example.com.mapexample.MapsActivity" />
 
             <Button
                 android:id="@+id/button_signup_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageview_map"
+                android:layout_below="@+id/map"
                 android:layout_marginTop="30dp"
                 android:background="@color/colorRed"
                 android:text="Sign up"

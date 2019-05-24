@@ -1,5 +1,9 @@
 package com.aiml.agwarriors.view;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,16 +14,34 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.database.TableUserInfo;
 import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.TableUserInfoDataModel;
 import com.aiml.agwarriors.utils.AppLog;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class SignupActivity extends BaseActivity implements IActivity {
+public class SignupActivity extends BaseActivity implements IActivity, OnMapReadyCallback,
+        LocationListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+
     private Button mButton_signup_sign_up;
-    private GoogleMap mMap;
     private double mLat, mLong;
     private EditText mEdititext_signup_username;
     private EditText mEdititext_signup_password;
@@ -28,6 +50,11 @@ public class SignupActivity extends BaseActivity implements IActivity {
     private RadioGroup mRadiogroup_signup_holder;
     private Button mButton_locate_me;
     private ImageView mImageview_map;
+    private LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
+    private GoogleMap mMap;
+    private Location mLastLocation;
+    private Marker mCurrLocationMarker;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -40,13 +67,13 @@ public class SignupActivity extends BaseActivity implements IActivity {
     @Override
     public void init() {
 //        getSupportActionBar().hide();
-       // setUpMapIfNeeded();
+        setUpMapIfNeeded();
     }
 
     @Override
     public void initView() {
         initHeader();
-        mButton_locate_me = (Button)findViewById(R.id.button_locate_me);
+        mButton_locate_me = (Button) findViewById(R.id.button_locate_me);
         mEdititext_signup_username = (EditText) findViewById(R.id.edititext_signup_username);
         mEdititext_signup_password = (EditText) findViewById(R.id.edititext_signup_password);
         mEdititext_signup_confirmation_password = (EditText) findViewById(R.id.edititext_signup_confirmation_password);
@@ -97,8 +124,6 @@ public class SignupActivity extends BaseActivity implements IActivity {
                 model.setPASS(mEdititext_signup_password.getText().toString());
                 model.setADDRESS(mEdititext_signup_phone_number.getText().toString());
                 model.setMOBILENO(mEdititext_signup_phone_number.getText().toString());
-
-
                 model.setTYPE(((RadioButton) findViewById(mRadiogroup_signup_holder.getCheckedRadioButtonId())).getText().toString());
                 model.setID(model.getTYPE().toUpperCase() + "_" + model.getUSERNAME().toUpperCase());
                 model.setLONG("" + mLong);
@@ -112,45 +137,11 @@ public class SignupActivity extends BaseActivity implements IActivity {
 
 
     private void setUpMapIfNeeded() {
-        /*if (mMap == null) {
-            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_signup_locate_me)).getMapAsync(new OnMapReadyCallback() {
-
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-                    mMap = googleMap;
-                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    UiSettings uiSettings = mMap.getUiSettings();
-                    uiSettings.setCompassEnabled(false);
-                    uiSettings.setZoomControlsEnabled(true);
-                    uiSettings.setMyLocationButtonEnabled(true);
-                    LatLng india = new LatLng(-34, 151);
-                    mMap.addMarker(new MarkerOptions().position(india).title("Marker in India"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(india));
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            return;
-                        }
-                    }
-                    mMap.setMyLocationEnabled(true);
-                    if (mMap != null) {
-                        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-                            @Override
-                            public void onMyLocationChange(Location arg0) {
-                                LatLng obj = new LatLng(arg0.getLatitude(), arg0.getLongitude());
-                                mMap.addMarker(new MarkerOptions().position(obj).title("It's Me!"));
-                                mLat = obj.latitude;
-                                mLong = obj.longitude;
-                            }
-                        });
-                    }
-                }
-
-
-            });
-
-        }*/
+        if (mMap == null) {
+            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
+        }
     }
+
 
     private void saveSignupData(TableUserInfoDataModel pModel) {
         long row = 0;
@@ -161,6 +152,81 @@ public class SignupActivity extends BaseActivity implements IActivity {
             table.closeDB();
         } catch (Exception e) {
             AppLog.errLog("SignUp", "saveSignupData: " + row + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+        else {
+            buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
+        }
+    }
+
+
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker.remove();
+        }
+        //Place current location marker
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("Current Position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+        //move map camera
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
 }

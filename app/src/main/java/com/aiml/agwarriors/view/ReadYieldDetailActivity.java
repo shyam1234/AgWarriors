@@ -50,7 +50,10 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
     private View mFragment_regyield_locate_buyer;
     private EditText mEdittext_regyield_cost;
     private ImageView mImageview_map;
+    private ImageView mImg_regyield_yield_pic;
+    private Button mBtn_regyield_take_pic;
     //private ArrayList<YieldListModel> mFarmerInfo;
+    private ArrayList permissions = new ArrayList();
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -115,8 +118,11 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         mEdittext_regyield_cost = (EditText) findViewById(R.id.edittext_regyield_cost);
         mEdittext_regyield_cost.setEnabled(false);
         mEdittext_regyield_bid_cost = (EditText) findViewById(R.id.edittext_regyield_bid_cost);
-
-
+        mImg_regyield_yield_pic = (ImageView) findViewById(R.id.img_regyield_yield_pic);
+        mBtn_regyield_take_pic = (Button) findViewById(R.id.btn_regyield_take_pic);
+        mBtn_regyield_take_pic.setVisibility(View.GONE);
+        mImg_regyield_yield_pic.setVisibility(View.GONE);
+        //mBtn_regyield_take_pic.setOnClickListener(this);
         Button button_regyield_smartanalysis = (Button) findViewById(R.id.button_regyield_smartanalysis);
         button_regyield_smartanalysis.setVisibility(View.GONE);
         Spinner spinner_regyield_crop_type = (Spinner) findViewById(R.id.spinner_regyield_crop_type);
@@ -149,10 +155,10 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
 
         mSpinnerBidCostUnit = (Spinner) findViewById(R.id.spinner_regyield_bid_cost_unit);
         mSpinnerBidCostUnit.setEnabled(false);
-        mFragment_regyield_locate_buyer =  findViewById(R.id.fragment_regyield_locate_buyer);
-        mImageview_map = (ImageView)findViewById(R.id.imageview_map);
+        mFragment_regyield_locate_buyer = findViewById(R.id.fragment_regyield_locate_buyer);
+        mImageview_map = (ImageView) findViewById(R.id.imageview_map);
         if (model != null) {
-           mEdittext_regyield_crop.setText(model.getYield());
+            mEdittext_regyield_crop.setText(model.getYield());
             spinner_regyield_crop_type.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.crop_type), model.getYieldType()));
             mQty.setText(model.getQTY());
             spinner_regyield_unit.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.unit), model.getQTYType()));
@@ -192,10 +198,10 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                         //For Buyer
                         dismiss.setVisibility(View.GONE);
                         lin_holder_btn_accept_reject.setVisibility(View.GONE);
-                        if(model.getBidCostPerUnit() != null) {
+                        if (model.getBidCostPerUnit() != null) {
                             lin_regyield_bid_cost.setVisibility(View.VISIBLE);
                             mEdittext_regyield_bid_cost.setEnabled(false);
-                        }else {
+                        } else {
                             lin_regyield_bid_cost.setVisibility(View.GONE);
                         }
                     } else {

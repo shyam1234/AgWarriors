@@ -121,6 +121,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/commom_padding"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:id="@+id/img_regyield_yield_pic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="0.5"
+                    android:scaleType="fitXY"
+                    android:src="@android:drawable/ic_menu_camera" />
+
+                <Button
+                    android:id="@+id/btn_regyield_take_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_weight="0.5"
+                    android:padding="4dp"
+                    android:text="Take Yield Picture"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/button_size_medium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/commom_padding"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -202,10 +231,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:textSize="@dimen/button_size_medium"
                 android:padding="4dp"
                 android:text="Predict Price"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/button_size_medium" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barchart_cost"
@@ -250,9 +279,9 @@
                     android:layout_weight="0.5"
                     android:background="@drawable/border_rect"
                     android:gravity="left"
-                    android:text="Bengaluru"
                     android:padding="4dp"
                     android:singleLine="true"
+                    android:text="Bengaluru"
                     android:textColor="@color/colorBlack" />
 
 
@@ -286,7 +315,6 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/mango_shop"
                 android:visibility="visible" />
-
 
 
             <LinearLayout
