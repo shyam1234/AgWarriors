@@ -193,7 +193,7 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
             listDate.add(holder.getDate());
             listCost.add(new BarEntry(holder.getPrice(), index++));
         }
-        BarDataSet BardatasetCost = new BarDataSet(listCost, "Cost");
+        BarDataSet BardatasetCost = new BarDataSet(listCost, "Price");
         BarData BARDATA = new BarData(listDate,BardatasetCost);
         BardatasetCost.setColors(ColorTemplate.COLORFUL_COLORS);
         mBarchart_cost.setData(BARDATA);
@@ -213,7 +213,7 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         mModel.setCostPerUnit(mEdittext_regyield_cost.getText().toString());
         mModel.setCostUnit(mSpinner_regyield_cost.getSelectedItem().toString());
         mModel.setPlaceToSell(mTextview_regyield_place_to_sell_value.getText().toString());
-        mModel.setStatus("Sent Broadcast");
+        mModel.setStatus("Sent Broadcast By Verified Farmer");
         mModel.setStatusValue(YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER);
         mTextview_regyield_lot_no_value.setText("LOT" + "_" + mModel.getYield() + "_" + mModel.getYieldType() + "_" + System.currentTimeMillis());
         mModel.setLotnumber(mTextview_regyield_lot_no_value.getText().toString().replace("/", ""));
@@ -369,7 +369,7 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         switch (view.getId()) {
             case R.id.btn_regyield_take_pic:
                 openCamera();
-                Toast.makeText(RegisterYieldActivity.this,"Working",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegisterYieldActivity.this,"Working",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.textview_regyield_place_to_sell_value:
                 Intent intent = new Autocomplete.IntentBuilder(
@@ -487,7 +487,7 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
     private void   showCameraPopup(){
         AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
         myAlertDialog.setTitle("Upload Pictures Option");
-        myAlertDialog.setMessage("How do you want to set your picture?");
+        myAlertDialog.setMessage("How do you want to set yield picture?");
         myAlertDialog.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

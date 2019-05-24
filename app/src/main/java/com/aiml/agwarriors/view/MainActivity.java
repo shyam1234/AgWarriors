@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aiml.agwarriors.R;
@@ -26,6 +26,7 @@ import com.aiml.agwarriors.model.YieldListModel;
 import com.aiml.agwarriors.utils.AppLog;
 import com.aiml.agwarriors.utils.CustomDialogbox;
 import com.aiml.agwarriors.utils.RecyclerTouchListener;
+import com.aiml.agwarriors.utils.RecyclerViewItemDecorator;
 
 import java.util.ArrayList;
 
@@ -33,14 +34,17 @@ public class MainActivity extends BaseActivity implements IActivity {
 
     private final String YIELD = "Record Yield";
     private final String BID = "Bid";
-    private final String HISTORY = "History";
+    private final String HISTORY = "Transaction History";
+    private final String LOCATE_COLD_STORAGE = "Locate Cold Storage Facility";
+    private final String LOCATE_PACKAGE_FACILTY = "Locate Packaging Facility";
     private final String GENERAL_INFO = "General Information";
     private final String ANALYTICS = "Analytics";
+    private final String ABOUT_US = "About Us";
     private final String ACTIVE_BID = "Active Bid";
+    private final String AGRIBOT = "Raitha Mitra (Agribot)";
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
     private ArrayList<MainScreenModel> mList;
     private RelativeLayout mNotification_holder;
     private TextView mTextview_header_notification_count;
@@ -48,6 +52,8 @@ public class MainActivity extends BaseActivity implements IActivity {
     private ArrayList<YieldListModel> mListYieldBroadCast;
     private static final String HTTPS = "https://";
     private static final String HTTP = "http://";
+    private Button mBtnChatBot;
+
 
     @Override
     public void init() {
@@ -56,17 +62,25 @@ public class MainActivity extends BaseActivity implements IActivity {
 
 
     private void initListForFarmer() {
-        mList.add(new MainScreenModel(YIELD));
-        mList.add(new MainScreenModel(HISTORY));
-        mList.add(new MainScreenModel(GENERAL_INFO));
-        mList.add(new MainScreenModel(ANALYTICS));
+        mList.add(new MainScreenModel(YIELD,getResources().getDrawable(R.drawable.record_yield)));
+        mList.add(new MainScreenModel(HISTORY,getResources().getDrawable(R.drawable.transaction_history)));
+        mList.add(new MainScreenModel(LOCATE_COLD_STORAGE,getResources().getDrawable(R.drawable.locate_cold)));
+        mList.add(new MainScreenModel(LOCATE_PACKAGE_FACILTY,getResources().getDrawable(R.drawable.packaging)));
+        mList.add(new MainScreenModel(GENERAL_INFO,getResources().getDrawable(R.drawable.information)));
+        mList.add(new MainScreenModel(ANALYTICS,getResources().getDrawable(R.drawable.analytics)));
+        mList.add(new MainScreenModel(AGRIBOT,getResources().getDrawable(R.drawable.chatbot)));
+        mList.add(new MainScreenModel(ABOUT_US,getResources().getDrawable(R.drawable.aboutus)));
     }
 
     private void initListForBuyer() {
-        mList.add(new MainScreenModel(BID));
-        mList.add(new MainScreenModel(ACTIVE_BID));
-        mList.add(new MainScreenModel(HISTORY));
-        mList.add(new MainScreenModel(ANALYTICS));
+        mList.add(new MainScreenModel(BID,getResources().getDrawable(R.drawable.bid)));
+        mList.add(new MainScreenModel(ACTIVE_BID,getResources().getDrawable(R.drawable.active_bid)));
+        mList.add(new MainScreenModel(LOCATE_COLD_STORAGE,getResources().getDrawable(R.drawable.locate_cold)));
+        mList.add(new MainScreenModel(LOCATE_PACKAGE_FACILTY,getResources().getDrawable(R.drawable.packaging)));
+        mList.add(new MainScreenModel(HISTORY,getResources().getDrawable(R.drawable.transaction_history)));
+        mList.add(new MainScreenModel(GENERAL_INFO,getResources().getDrawable(R.drawable.information)));
+        mList.add(new MainScreenModel(ANALYTICS,getResources().getDrawable(R.drawable.analytics)));
+        mList.add(new MainScreenModel(ABOUT_US,getResources().getDrawable(R.drawable.aboutus)));
     }
 
     private void initHeader() {
@@ -81,7 +95,6 @@ public class MainActivity extends BaseActivity implements IActivity {
         back.setOnClickListener(this);
         mNotification_holder.setOnClickListener(this);
     }
-    private Button mBtnChatBot;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -90,18 +103,19 @@ public class MainActivity extends BaseActivity implements IActivity {
         init();
         mBtnChatBot = (Button) findViewById(R.id.btn_main_agrebot);
         mBtnChatBot.setOnClickListener(this);
+        mBtnChatBot.setVisibility(View.GONE);
         switch (Constant.USER_INFO_LIST.get(0).getTYPE()) {
             case Constant.USER_FARMER:
                 mListNotification = getNotification(Constant.USER_INFO_LIST.get(0).getID());
                 mListYieldBroadCast = getBroadcastForSeller(Constant.USER_INFO_LIST.get(0).getID());
                 initListForFarmer();
-                mBtnChatBot.setVisibility(View.VISIBLE);
+                //mBtnChatBot.setVisibility(View.VISIBLE);
                 break;
             case Constant.USER_BUYER:
                 mListNotification = getNotificationForBuyerFromDB(Constant.USER_INFO_LIST.get(0).getID());
                 mListYieldBroadCast = getBoradcastListForBuyer(Constant.USER_INFO_LIST.get(0).getID());
                 initListForBuyer();
-                mBtnChatBot.setVisibility(View.GONE);
+                //mBtnChatBot.setVisibility(View.GONE);
                 break;
         }
         initView();
@@ -120,8 +134,9 @@ public class MainActivity extends BaseActivity implements IActivity {
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+        recyclerView.addItemDecoration(new RecyclerViewItemDecorator(0));
         mAdapter = new MainScreenAdapter(mList);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
@@ -151,7 +166,18 @@ public class MainActivity extends BaseActivity implements IActivity {
                     case ACTIVE_BID:
                         navigateTo(MainActivity.this, ActiveBidListActivity.class, false);
                         break;
-
+                    case LOCATE_COLD_STORAGE:
+                        navigateTo(MainActivity.this, LocateColdStorageActivity.class, false);
+                        break;
+                    case LOCATE_PACKAGE_FACILTY:
+                        navigateTo(MainActivity.this, LocatePackagingActivity.class, false);
+                        break;
+                    case AGRIBOT:
+                        openBrowser(MainActivity.this, Constant.URL_AGREBOT);
+                        break;
+                    case ABOUT_US:
+                        Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
 
@@ -186,7 +212,7 @@ public class MainActivity extends BaseActivity implements IActivity {
                 mListYieldBroadCast = getBroadcastForSeller(Constant.USER_INFO_LIST.get(0).getID());
                 if (mListNotification != null && mListNotification.size() > 0) {
                     mNotification_holder.setVisibility(View.VISIBLE);
-                    mTextview_header_notification_count.setText(""+mListNotification.size());
+                    mTextview_header_notification_count.setText("" + mListNotification.size());
                 } else {
                     mNotification_holder.setVisibility(View.GONE);
                 }
@@ -196,7 +222,7 @@ public class MainActivity extends BaseActivity implements IActivity {
                 mListYieldBroadCast = getBoradcastListForBuyer(Constant.USER_INFO_LIST.get(0).getID());
                 if (mListNotification != null && mListNotification.size() > 0) {
                     mNotification_holder.setVisibility(View.VISIBLE);
-                    mTextview_header_notification_count.setText(""+mListNotification.size());
+                    mTextview_header_notification_count.setText("" + mListNotification.size());
                 } else {
                     mNotification_holder.setVisibility(View.GONE);
                 }
@@ -309,7 +335,7 @@ public class MainActivity extends BaseActivity implements IActivity {
     @Override
     public void onClick(View view) {
         super.onClick(view);
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_main_agrebot:
                 openBrowser(MainActivity.this, Constant.URL_AGREBOT);
                 break;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/inc_header"
+        layout="@layout/inc_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_size"
+        android:visibility="visible"></include>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/border_rect"
+        android:padding="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/locate_packaging" />
+</LinearLayout>

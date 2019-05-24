@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="20dp"
-    android:orientation="vertical">
+    android:layout_height="149dp"
+    android:layout_margin="1dp"
+    android:background="@color/colorBlueList"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/image_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/record_yield" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="#44000000" />
 
     <com.aiml.agwarriors.utils.FontTextView
         android:id="@+id/textview_row_main_item"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/colorBlueList"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="#99000000"
         android:gravity="center"
-        android:text="Test"
+        android:padding="@dimen/commom_padding"
+        android:text="Text"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/button_size_high_main"
         android:textStyle="bold" />
-</LinearLayout>
+</RelativeLayout>

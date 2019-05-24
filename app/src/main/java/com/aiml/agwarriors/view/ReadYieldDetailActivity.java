@@ -324,7 +324,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                 case R.id.button_regyield_accept:
                     model.setStatusValue(YieldListModel.STATUS_ACCEPT_PROPOSAL);
                     model.setMessageFrom(Constant.USER_INFO_LIST.get(0).getID());
-                    model.setStatus("Accepted By Verified Former" /*+ model.getMessageFrom()*/);
+                    model.setStatus("Accepted By Verified Farmer" /*+ model.getMessageFrom()*/);
                     updateYieldDB(model);
                     Toast.makeText(ReadYieldDetailActivity.this, "Accepted Proposal By " + Constant.USER_INFO_LIST.get(0).getID(), Toast.LENGTH_LONG).show();
                     finish();

@@ -226,6 +226,7 @@
             android:padding="0dp"
             android:text="Status"
             android:textColor="@color/colorBlack"
+            android:drawableRight="@drawable/verified_four"
             android:textSize="@dimen/button_size_small"
             android:textStyle="bold" />
 

@@ -166,7 +166,6 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/button_size_medium" />
 
-
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>
