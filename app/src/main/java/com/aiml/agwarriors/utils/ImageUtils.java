@@ -53,6 +53,14 @@ public class ImageUtils {
                 pImageView.getHeight(), false));
     }
 
+    public void setCompressBitmap( byte[] byteArray, ImageView pImageView) {
+        if(byteArray !=null &&  byteArray.length >0) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            pImageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, 500,
+                    500, false));
+        }
+    }
+
     public byte[] getBytesFromBitmapCamera(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);

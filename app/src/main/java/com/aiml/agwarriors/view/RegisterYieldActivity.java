@@ -217,6 +217,9 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         mModel.setStatusValue(YieldListModel.STATUS_SENT_BRAODCAST_TO_BUYER);
         mTextview_regyield_lot_no_value.setText("LOT" + "_" + mModel.getYield() + "_" + mModel.getYieldType() + "_" + System.currentTimeMillis());
         mModel.setLotnumber(mTextview_regyield_lot_no_value.getText().toString().replace("/", ""));
+        if(bytesDocumentsTypePicture!=null) {
+            mModel.setImageArray(bytesDocumentsTypePicture);
+        }
         saveToYieldDB(mModel);
     }
 
@@ -419,21 +422,21 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                     if (data != null) {
                         bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                        //bytesDocumentsTypePicture = new ImageUtils().getBytesFromBitmap(bitmap);
+                        bytesDocumentsTypePicture = new ImageUtils().getBytesFromBitmap(bitmap);
                         new ImageUtils().setCompressBitmap(bitmap,mImg_regyield_yield_pic);
                     } else {
                         Toast.makeText(getApplicationContext(), " some_error_while_uploading  ", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     bitmap = BitmapFactory.decodeFile(captureMediaFile.getAbsolutePath());
-                    //bytesDocumentsTypePicture = new ImageUtils().getBytesFromBitmap(bitmap);
+                    bytesDocumentsTypePicture = new ImageUtils().getBytesFromBitmap(bitmap);
                     new ImageUtils().setCompressBitmap(bitmap,mImg_regyield_yield_pic);
                 }
 
             } else if (resultCode == RESULT_OK && requestCode == GALLERY_PICTURE) {
                 if (data != null) {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),  data.getData());
-                    //bytesDocumentsTypePicture = new ImageUtils().getBytesFromBitmap(bitmap);
+                    bytesDocumentsTypePicture = new ImageUtils().getBytesFromBitmap(bitmap);
                     new ImageUtils().setCompressBitmap(bitmap,mImg_regyield_yield_pic);
                 } else {
                     Toast.makeText(getApplicationContext(), " some_error_while_uploading  ", Toast.LENGTH_SHORT).show();

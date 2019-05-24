@@ -34,6 +34,8 @@ public class TableYield {
     public static final String STATUS_VALUE = "status_value";
     public static final String MESSAGE_TO="message_to";
     public static final String MESSAGE_FROM="message_from";
+    private static final String IMAGE_NAME = "image_name";
+    private static final String IMAGE_DATA = "image_data";
 
 
     //-------------------------------------------------------------------------
@@ -54,6 +56,8 @@ public class TableYield {
             + STATUS + " varchar(255), "
             + QTY_TYPE + " varchar(255), "
             + STATUS_VALUE + " int, "
+            + IMAGE_NAME + " varchar(255), "
+            + IMAGE_DATA + " BLOB, "
             + COST_PER_UNIT + " varchar(255) "
             + " ) ";
     private SQLiteDatabase mDB;
@@ -94,6 +98,8 @@ public class TableYield {
                 contentValues.put(BID_COST_PER_UNIT, holder.getBidCostPerUnit());
                 contentValues.put(STATUS, holder.getStatus());
                 contentValues.put(STATUS_VALUE, holder.getStatusValue());
+                contentValues.put(IMAGE_NAME, holder.getImageName());
+                contentValues.put(IMAGE_DATA, holder.getImageArray());
 
                 row = mDB.insert(TABLE_NAME, null, contentValues);
                 return row;
@@ -128,6 +134,8 @@ public class TableYield {
                 contentValues.put(BID_COST_PER_UNIT, holder.getBidCostPerUnit());
                 contentValues.put(STATUS, holder.getStatus());
                 contentValues.put(STATUS_VALUE, holder.getStatusValue());
+                contentValues.put(IMAGE_NAME, holder.getImageName());
+                contentValues.put(IMAGE_DATA, holder.getImageArray());
                 //long row = mDB.update(TABLE_NAME, value, COL_REFERENCEID + "=? and " + COL_STUDENTID + "=?", new String[]{"" + pRefId, "" + UserInfo.studentId});
                 row = mDB.update(TABLE_NAME, contentValues, LOTID + "=? ", new String[]{"" + holder.getLotnumber()});
                 return row;
@@ -185,6 +193,8 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
                         list.add(model);
                     } while (cursor.moveToNext());
                 }
@@ -266,6 +276,8 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
                         list.add(model);
                     } while (cursor.moveToNext());
                 }
@@ -312,6 +324,8 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
                         list.add(model);
                     } while (cursor.moveToNext());
                 }
@@ -352,6 +366,8 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
                         list.add(model);
                     } while (cursor.moveToNext());
                 }
@@ -394,6 +410,8 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
                         list.add(model);
                     } while (cursor.moveToNext());
                 }
@@ -518,6 +536,8 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
                         list.add(model);
                     } while (cursor.moveToNext());
                 }
@@ -556,6 +576,8 @@ public class TableYield {
                         model.setQTYType((cursor.getString(cursor.getColumnIndex(QTY_TYPE))));
                         model.setStatusValue((cursor.getInt(cursor.getColumnIndex(STATUS_VALUE))));
                         model.setCostPerUnit((cursor.getString(cursor.getColumnIndex(COST_PER_UNIT))));
+                        model.setImageName((cursor.getString(cursor.getColumnIndex(IMAGE_NAME))));
+                        model.setImageArray((cursor.getBlob(cursor.getColumnIndex(IMAGE_DATA))));
                     } while (cursor.moveToNext());
                 }
                 cursor.close();

@@ -32,8 +32,24 @@ public class YieldListModel implements Serializable {
     private String messageFrom ="";
     private int statusValue;
     private int from;
+    private String imageName;
+    private byte[] imageArray;
 
+    public String getImageName() {
+        return imageName;
+    }
 
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public byte[] getImageArray() {
+        return imageArray;
+    }
+
+    public void setImageArray(byte[] imageArray) {
+        this.imageArray = imageArray;
+    }
 
     public String getLotnumber() {
         return lotnumber;

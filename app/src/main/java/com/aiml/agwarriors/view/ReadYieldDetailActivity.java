@@ -19,6 +19,7 @@ import com.aiml.agwarriors.interfaces.IActivity;
 import com.aiml.agwarriors.model.TableUserInfoDataModel;
 import com.aiml.agwarriors.model.YieldListModel;
 import com.aiml.agwarriors.utils.AppLog;
+import com.aiml.agwarriors.utils.ImageUtils;
 import com.aiml.agwarriors.utils.Utils;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
@@ -121,7 +122,6 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         mImg_regyield_yield_pic = (ImageView) findViewById(R.id.img_regyield_yield_pic);
         mBtn_regyield_take_pic = (Button) findViewById(R.id.btn_regyield_take_pic);
         mBtn_regyield_take_pic.setVisibility(View.GONE);
-        mImg_regyield_yield_pic.setVisibility(View.GONE);
         //mBtn_regyield_take_pic.setOnClickListener(this);
         Button button_regyield_smartanalysis = (Button) findViewById(R.id.button_regyield_smartanalysis);
         button_regyield_smartanalysis.setVisibility(View.GONE);
@@ -157,7 +157,12 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         mSpinnerBidCostUnit.setEnabled(false);
         mFragment_regyield_locate_buyer = findViewById(R.id.fragment_regyield_locate_buyer);
         mImageview_map = (ImageView) findViewById(R.id.imageview_map);
+        findViewById(R.id.lin_camera_holder).setVisibility(View.GONE);
         if (model != null) {
+            if( model.getImageArray() != null) {
+                new ImageUtils().setCompressBitmap(model.getImageArray(), mImg_regyield_yield_pic);
+                findViewById(R.id.lin_camera_holder).setVisibility(View.VISIBLE);
+            }
             mEdittext_regyield_crop.setText(model.getYield());
             spinner_regyield_crop_type.setSelection(Utils.getSpinnerPosition(getResources().getStringArray(R.array.crop_type), model.getYieldType()));
             mQty.setText(model.getQTY());
