@@ -159,7 +159,7 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
         mImageview_map = (ImageView) findViewById(R.id.imageview_map);
         findViewById(R.id.lin_camera_holder).setVisibility(View.GONE);
         if (model != null) {
-            if( model.getImageArray() != null) {
+            if (model.getImageArray() != null) {
                 new ImageUtils().setCompressBitmap(model.getImageArray(), mImg_regyield_yield_pic);
                 findViewById(R.id.lin_camera_holder).setVisibility(View.VISIBLE);
             }
@@ -183,6 +183,11 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
             mEdittext_regyield_cost.setTextColor(getResources().getColor(R.color.colorGray));
             mEdittext_regyield_bid_cost.setTextColor(getResources().getColor(R.color.colorGray));
             //------------------------------------
+            LinearLayout lin_farmer_info = (LinearLayout) findViewById(R.id.lin_farmer_info);
+            LinearLayout lin_buyer_info = (LinearLayout) findViewById(R.id.lin_buyer_info);
+            TextView textview_buyer_id_value = (TextView) findViewById(R.id.textview_buyer_id_value);
+            TextView textview_farmer_id_value = (TextView) findViewById(R.id.textview_farmer_id_value);
+
             switch (model.getFrom()) {
                 case FROM_PROPOSAL:
                     mEdittext_regyield_bid_cost.setTextColor(getResources().getColor(R.color.colorBlack));
@@ -251,6 +256,10 @@ public class ReadYieldDetailActivity extends BaseActivity implements IActivity {
                     mImageview_map.setVisibility(View.VISIBLE);
                     break;
                 case FROM_HISTORY:
+                    lin_farmer_info.setVisibility(View.VISIBLE);
+                    lin_buyer_info.setVisibility(View.VISIBLE);
+                    textview_buyer_id_value.setText(model.getMessageTo());
+                    textview_farmer_id_value.setText(model.getMessageFrom());
                 case FROM_ACTIVE_BID:
                     mFragment_regyield_locate_buyer.setVisibility(View.GONE);
                     mImageview_map.setVisibility(View.GONE);

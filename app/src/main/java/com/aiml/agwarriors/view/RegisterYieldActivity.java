@@ -484,9 +484,9 @@ public class RegisterYieldActivity extends BaseActivity implements IActivity, Ad
         return true;
     }
 
-    private void   showCameraPopup(){
+    private void showCameraPopup(){
         AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
-        myAlertDialog.setTitle("Upload Pictures Option");
+        myAlertDialog.setTitle("Upload Yield Photo");
         myAlertDialog.setMessage("How do you want to set yield picture?");
         myAlertDialog.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {

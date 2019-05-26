@@ -13,7 +13,43 @@
         android:visibility="visible"></include>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/commom_padding"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/edittext_locate_cold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:background="@drawable/border_rect"
+            android:enabled="true"
+            android:hint="Enter Location"
+            android:maxLength="10"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:textColor="@color/colorGray" />
+
+        <Button
+            android:id="@+id/btn_locate_cold_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="Search"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/button_size_medium" />
+    </LinearLayout>
+
     <ImageView
+        android:id="@+id/imageview_map"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/border_rect"

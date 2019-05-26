@@ -2,15 +2,21 @@ package com.aiml.agwarriors.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.aiml.agwarriors.R;
 import com.aiml.agwarriors.interfaces.IActivity;
+import com.aiml.agwarriors.utils.Utils;
 
 public class LocateColdStorageActivity extends BaseActivity implements IActivity {
+
+    private Button mBtn_locate_cold_search;
+    private ImageView mImgViewMap;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,6 +34,12 @@ public class LocateColdStorageActivity extends BaseActivity implements IActivity
     @Override
     public void initView() {
         initHeader();
+        mBtn_locate_cold_search = (Button)findViewById(R.id.btn_locate_cold_search);
+        mBtn_locate_cold_search.setOnClickListener(this);
+        mImgViewMap = (ImageView)findViewById(R.id.imageview_map);
+        mImgViewMap.setOnClickListener(this);
+        mImgViewMap.setVisibility(View.GONE);
+
     }
 
     private void initHeader() {
@@ -50,5 +62,20 @@ public class LocateColdStorageActivity extends BaseActivity implements IActivity
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()){
+            case R.id.btn_locate_cold_search:
+                mImgViewMap.setVisibility(View.VISIBLE);
+                Utils.hideKeyboard(LocateColdStorageActivity.this);
+                break;
+            case R.id.imageview_map:
+                Toast.makeText(LocateColdStorageActivity.this,"Getting more detail of selected cold storage", Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AgWarrior</string>
+    <string name="app_name">AgWarriors</string>
     <string-array name="unit">
         <item>Unit</item>
         <item>Kg</item>

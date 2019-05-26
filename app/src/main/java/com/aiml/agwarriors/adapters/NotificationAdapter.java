@@ -76,6 +76,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             proposedCostPerUnit = v.findViewById(R.id.textview_notification_proposed_cost_value);
             status = v.findViewById(R.id.textview_notification_status_value);
             place_holder = v.findViewById(R.id.lin_row_list_yield);
+
            // btn_reject = v.findViewById(R.id.btn_notification_reject);
            // btn_accept = v.findViewById(R.id.btn_notification_accept);
         }
