@@ -62,25 +62,25 @@ public class MainActivity extends BaseActivity implements IActivity {
 
 
     private void initListForFarmer() {
-        mList.add(new MainScreenModel(YIELD,getResources().getDrawable(R.drawable.record_yield)));
-        mList.add(new MainScreenModel(HISTORY,getResources().getDrawable(R.drawable.transaction_history)));
-        mList.add(new MainScreenModel(LOCATE_COLD_STORAGE,getResources().getDrawable(R.drawable.locate_cold)));
-        mList.add(new MainScreenModel(LOCATE_PACKAGE_FACILTY,getResources().getDrawable(R.drawable.packaging)));
-        mList.add(new MainScreenModel(GENERAL_INFO,getResources().getDrawable(R.drawable.information)));
-        mList.add(new MainScreenModel(ANALYTICS,getResources().getDrawable(R.drawable.analytics)));
-        mList.add(new MainScreenModel(AGRIBOT,getResources().getDrawable(R.drawable.chatbot)));
-        mList.add(new MainScreenModel(ABOUT_US,getResources().getDrawable(R.drawable.aboutus)));
+        mList.add(new MainScreenModel(YIELD, getResources().getDrawable(R.drawable.record_yield)));
+        mList.add(new MainScreenModel(HISTORY, getResources().getDrawable(R.drawable.transaction_history)));
+        mList.add(new MainScreenModel(LOCATE_COLD_STORAGE, getResources().getDrawable(R.drawable.locate_cold)));
+        mList.add(new MainScreenModel(LOCATE_PACKAGE_FACILTY, getResources().getDrawable(R.drawable.packaging)));
+        mList.add(new MainScreenModel(GENERAL_INFO, getResources().getDrawable(R.drawable.information)));
+        mList.add(new MainScreenModel(ANALYTICS, getResources().getDrawable(R.drawable.analytics)));
+        mList.add(new MainScreenModel(AGRIBOT, getResources().getDrawable(R.drawable.chatbot)));
+        mList.add(new MainScreenModel(ABOUT_US, getResources().getDrawable(R.drawable.aboutus)));
     }
 
     private void initListForBuyer() {
-        mList.add(new MainScreenModel(BID,getResources().getDrawable(R.drawable.bid)));
-        mList.add(new MainScreenModel(ACTIVE_BID,getResources().getDrawable(R.drawable.active_bid)));
-        mList.add(new MainScreenModel(LOCATE_COLD_STORAGE,getResources().getDrawable(R.drawable.locate_cold)));
-        mList.add(new MainScreenModel(LOCATE_PACKAGE_FACILTY,getResources().getDrawable(R.drawable.packaging)));
-        mList.add(new MainScreenModel(HISTORY,getResources().getDrawable(R.drawable.transaction_history)));
-        mList.add(new MainScreenModel(GENERAL_INFO,getResources().getDrawable(R.drawable.information)));
-        mList.add(new MainScreenModel(ANALYTICS,getResources().getDrawable(R.drawable.analytics)));
-        mList.add(new MainScreenModel(ABOUT_US,getResources().getDrawable(R.drawable.aboutus)));
+        mList.add(new MainScreenModel(BID, getResources().getDrawable(R.drawable.bid)));
+        mList.add(new MainScreenModel(ACTIVE_BID, getResources().getDrawable(R.drawable.active_bid)));
+        mList.add(new MainScreenModel(LOCATE_COLD_STORAGE, getResources().getDrawable(R.drawable.locate_cold)));
+        mList.add(new MainScreenModel(LOCATE_PACKAGE_FACILTY, getResources().getDrawable(R.drawable.packaging)));
+        mList.add(new MainScreenModel(HISTORY, getResources().getDrawable(R.drawable.transaction_history)));
+        mList.add(new MainScreenModel(GENERAL_INFO, getResources().getDrawable(R.drawable.information)));
+        mList.add(new MainScreenModel(ANALYTICS, getResources().getDrawable(R.drawable.analytics)));
+        mList.add(new MainScreenModel(ABOUT_US, getResources().getDrawable(R.drawable.aboutus)));
     }
 
     private void initHeader() {
@@ -98,8 +98,8 @@ public class MainActivity extends BaseActivity implements IActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
         setContentView(R.layout.activity_main);
+        super.onCreate(bundle);
         init();
         mBtnChatBot = (Button) findViewById(R.id.btn_main_agrebot);
         mBtnChatBot.setOnClickListener(this);
